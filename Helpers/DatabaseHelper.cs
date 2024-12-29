@@ -16,12 +16,13 @@ namespace CipherSync.Helpers
             SQLitePCL.Batteries_V2.Init();
         }
 
-        public DatabaseHelper()
+        public DatabaseHelper(string password)
         {
-            // Set the connection string with the encryption key
-            _connectionString = "Data Source=encrypted_pwd_database.db;Password=ZM!{K^LPmW5gWoYN1o?7T4DTG/-]W>G&+*Y|z5gYj$-vei2ADsFkGl!](>i}xDJ}d!%S!xDTH#J$ZId#q(nh%w3p{)3%Hm^Q/r/njI!{h^fDI^?S6rcXw}8}!p2DV/Q>]j#&zn)OD$VaV]7rVTnq$0#WuO[NoE{!Z>a7zs*#K{7F[MDU+@]H64obouK6!W}P}y6k/r/n(F!K+^p+XQCXQG)R^&a!$K&n]/H%&gEXLmPjqEN%q?I0+Jc!z5=]3rRK}c#Bq@dMtC{63p?FhR#j+Ls#BQt5oNApKXyFh@^%/r/n^[!{g}]B-w(Awc3!rS##qW((-]nlO{4ks#2/3O5[z#Sj?SV@C#hjV5E&96UacfqR#wY0LiOT#FaTLFR>#u@SJSi]o@-K7g5r/r/n#@o[WUCdX%h7#W!yzjU!05KF0m(t)D^05g=rKpO90=!%f$&p%dZZ($^*YU5kR+lj4}GE0OKo!}+gIB(GNi!tGBhg!q!p/--G";
+            _connectionString = $"Data Source=encrypted_pwd_database.db;Password={password}";
             InitializeDatabase();
         }
+
+
 
         private void InitializeDatabase()
         {

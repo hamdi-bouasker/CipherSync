@@ -1,0 +1,10 @@
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\P-GEN.exe.config
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\P-GEN.exe
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\P-GEN.pdb
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P-GEN.csproj.AssemblyReference.cache
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P_GEN.Form1.resources
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P_GEN.Properties.Resources.resources
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P-GEN.csproj.GenerateResource.cache
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P-GEN.csproj.CoreCompileInputs.cache
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P-GEN.exe
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\P-GEN.pdb

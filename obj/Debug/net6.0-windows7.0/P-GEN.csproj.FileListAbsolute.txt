@@ -1,0 +1,6 @@
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P-GEN.csproj.AssemblyReference.cache
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P_GEN.Form1.resources
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P_GEN.Properties.Resources.resources
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P-GEN.csproj.GenerateResource.cache
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P-GEN.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net6.0-windows7.0\P-GEN.csproj.CoreCompileInputs.cache

@@ -13,23 +13,73 @@ using CipherSync.Helpers;
 
 namespace CipherSync
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private List<string> selectedFiles1 = new List<string>();
         private List<string> selectedFiles2 = new List<string>();
         private readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16 };
-        private readonly DatabaseHelper db;
+        private DatabaseHelper db;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
-            db = new DatabaseHelper();
-            LoadData();
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
 
+            // Attach the Load event handler
+            this.Load += new System.EventHandler(this.MainForm_Load);
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            SetControlsEnabled(false); // Method to disable controls
+
+            if (!File.Exists("encrypted_pwd_database.db"))
+            {
+                RegisterMasterPasswordForm registerMasterPasswordForm = new RegisterMasterPasswordForm();
+                registerMasterPasswordForm.ShowDialog();
+                if (registerMasterPasswordForm.DialogResult == DialogResult.OK)
+                {
+                    string password = registerMasterPasswordForm.RegisterMasterPwdTxtBox.Text; // Ensure you have a public Password property
+                    SecureStorage.SavePassword(password);
+                    db = new DatabaseHelper(password); // Pass the password to DatabaseHelper constructor
+                    SetControlsEnabled(true);
+                    LoadData();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                LoginForm loginForm = new LoginForm();
+                loginForm.ShowDialog();
+                if (loginForm.DialogResult == DialogResult.OK)
+                {
+                    string password = loginForm.LoginMasterPwdTxtBox.Text; // Ensure you have a public Password property
+                    db = new DatabaseHelper(password); // Pass the password to DatabaseHelper constructor
+                    SetControlsEnabled(true);
+                    LoadData();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+        }
+
+        private void SetControlsEnabled(bool enabled)
+        {
+            foreach (Control ctrl in this.Controls)
+            {
+                ctrl.Enabled = enabled;
+            }
+        }
+
+
+
 
         private void LoadData()
         {
@@ -43,7 +93,13 @@ namespace CipherSync
         }
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0) { DataGridViewRow selectedRow = dataGridView1.SelectedRows[0]; websiteTextBox.Text = selectedRow.Cells["Website"].Value?.ToString(); usernameTextBox.Text = selectedRow.Cells["Username"].Value?.ToString(); passwordTextBox.Text = selectedRow.Cells["Password"].Value?.ToString(); }
+            if (dataGridView1.SelectedRows.Count > 0) 
+            { 
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0]; 
+                websiteTextBox.Text = selectedRow.Cells["Website"].Value?.ToString(); 
+                usernameTextBox.Text = selectedRow.Cells["Username"].Value?.ToString(); 
+                passwordTxtBox.Text = selectedRow.Cells["Password"].Value?.ToString(); 
+            }
         }
 
         private void BrowseFiles_Click(object sender, EventArgs e)
@@ -705,7 +761,7 @@ namespace CipherSync
                 {
                     entry.Website = websiteTextBox.Text;
                     entry.Username = usernameTextBox.Text;
-                    entry.Password = passwordTextBox.Text;
+                    entry.Password = passwordTxtBox.Text;
                     db.UpdateEntry(entry);
                     MessageBox.Show($"Updating Id: {id}, Website: {entry.Website}, Username: {entry.Username}, Password: {entry.Password}");
 
