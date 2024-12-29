@@ -78,9 +78,6 @@ namespace CipherSync
             }
         }
 
-
-
-
         private void LoadData()
         {
             var entries = db.GetAllEntries().ToList();

@@ -12,6 +12,7 @@ namespace CipherSync
 {
     public partial class LoginForm : Form
     {
+        public string Password { get; private set; }
         public LoginForm()
         {
             InitializeComponent();
@@ -19,13 +20,17 @@ namespace CipherSync
 
         private void SubmitLoginPwdBtn_Click(object sender, EventArgs e)
         {
-            if (LoginMasterPwdTxtBox.Text == SecureStorage.GetPassword())
+            Password = LoginMasterPwdTxtBox.Text;
+            if (Password == SecureStorage.GetPassword())
             {
+               
                 MessageBox.Show("Login successful!");
+                this.DialogResult = DialogResult.OK;
                 Close();
             }
             else
             {
+                this.DialogResult = DialogResult.Cancel;
                 MessageBox.Show("Login failed! Check your password or load the backup file: Master-Password.dat!");
                 return;
             }
@@ -33,6 +38,7 @@ namespace CipherSync
 
         private void CancelLoginMasterPwdBtn_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             Close();
         }
 
