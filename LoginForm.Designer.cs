@@ -49,10 +49,10 @@
             CancelLoginMasterPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             CancelLoginMasterPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             CancelLoginMasterPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            CancelLoginMasterPwdBtn.Location = new System.Drawing.Point(238, 149);
+            CancelLoginMasterPwdBtn.Location = new System.Drawing.Point(228, 147);
             CancelLoginMasterPwdBtn.Name = "CancelLoginMasterPwdBtn";
             CancelLoginMasterPwdBtn.Size = new System.Drawing.Size(158, 33);
-            CancelLoginMasterPwdBtn.TabIndex = 14;
+            CancelLoginMasterPwdBtn.TabIndex = 4;
             CancelLoginMasterPwdBtn.Text = "Cancel";
             CancelLoginMasterPwdBtn.UseVisualStyleBackColor = false;
             CancelLoginMasterPwdBtn.Click += CancelLoginMasterPwdBtn_Click;
@@ -62,10 +62,10 @@
             SubmitLoginPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             SubmitLoginPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             SubmitLoginPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            SubmitLoginPwdBtn.Location = new System.Drawing.Point(238, 81);
+            SubmitLoginPwdBtn.Location = new System.Drawing.Point(228, 81);
             SubmitLoginPwdBtn.Name = "SubmitLoginPwdBtn";
             SubmitLoginPwdBtn.Size = new System.Drawing.Size(158, 33);
-            SubmitLoginPwdBtn.TabIndex = 13;
+            SubmitLoginPwdBtn.TabIndex = 2;
             SubmitLoginPwdBtn.Text = "Submit";
             SubmitLoginPwdBtn.UseVisualStyleBackColor = false;
             SubmitLoginPwdBtn.Click += SubmitLoginPwdBtn_Click;
@@ -77,7 +77,7 @@
             LoginMasterPwdTxtBox.Location = new System.Drawing.Point(199, 33);
             LoginMasterPwdTxtBox.Name = "LoginMasterPwdTxtBox";
             LoginMasterPwdTxtBox.Size = new System.Drawing.Size(197, 26);
-            LoginMasterPwdTxtBox.TabIndex = 12;
+            LoginMasterPwdTxtBox.TabIndex = 1;
             LoginMasterPwdTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LoginPwdLoadBackupBtn
@@ -88,7 +88,7 @@
             LoginPwdLoadBackupBtn.Location = new System.Drawing.Point(23, 81);
             LoginPwdLoadBackupBtn.Name = "LoginPwdLoadBackupBtn";
             LoginPwdLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
-            LoginPwdLoadBackupBtn.TabIndex = 16;
+            LoginPwdLoadBackupBtn.TabIndex = 3;
             LoginPwdLoadBackupBtn.Text = "Load Backup";
             LoginPwdLoadBackupBtn.UseVisualStyleBackColor = false;
             LoginPwdLoadBackupBtn.Click += LoginPwdLoadBackupBtn_Click;
@@ -112,7 +112,7 @@
             Name = "LoginForm";
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "CypherSync";
+            Text = "CipherSync";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -24,14 +24,13 @@ namespace CipherSync
             if (Password == SecureStorage.GetPassword())
             {
                
-                MessageBox.Show("Login successful!");
+                MessageBox.Show("Login successful!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
             else
             {
-                this.DialogResult = DialogResult.Cancel;
-                MessageBox.Show("Login failed! Check your password or load the backup file: Master-Password.dat!");
+                MessageBox.Show("Login failed! Check your password or load the backup file: Master-Password.dat!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -44,8 +43,20 @@ namespace CipherSync
 
         private void LoginPwdLoadBackupBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var password = SecureStorage.GetPassword();
+                LoginMasterPwdTxtBox.Text = password;
+                MessageBox.Show("Backup file loaded successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            catch 
+            {
+                MessageBox.Show("No backup file found!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             
-            LoginMasterPwdTxtBox.Text = SecureStorage.GetPassword();
         }
     }
 }

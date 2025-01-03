@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CipherSync.Models;
 using CipherSync.Helpers;
+using System.Diagnostics;
 
 
 namespace CipherSync
@@ -25,10 +26,10 @@ namespace CipherSync
             InitializeComponent();
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
-            dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+            PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
 
             // Attach the Load event handler
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new EventHandler(this.MainForm_Load);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -81,112 +82,185 @@ namespace CipherSync
         private void LoadData()
         {
             var entries = db.GetAllEntries().ToList();
-            dataGridView1.DataSource = entries;
-            if (dataGridView1.Columns["Id"] != null)
+            PasswordManagerDGV.DataSource = entries;
+            if (PasswordManagerDGV.Columns["Id"] != null)
             {
-                dataGridView1.Columns["Id"].Visible = false;
+                PasswordManagerDGV.Columns["Id"].Visible = false;
             }
 
         }
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0) 
-            { 
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0]; 
-                websiteTextBox.Text = selectedRow.Cells["Website"].Value?.ToString(); 
-                usernameTextBox.Text = selectedRow.Cells["Username"].Value?.ToString(); 
-                passwordTxtBox.Text = selectedRow.Cells["Password"].Value?.ToString(); 
+            if (PasswordManagerDGV.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = PasswordManagerDGV.SelectedRows[0];
+                websiteTxtBox.Text = selectedRow.Cells["Website"].Value?.ToString();
+                usernameTxtBox.Text = selectedRow.Cells["Username"].Value?.ToString();
+                passwordTxtBox.Text = selectedRow.Cells["Password"].Value?.ToString();
             }
         }
 
-        private void BrowseFiles_Click(object sender, EventArgs e)
-        {
-            FilesNumber.Clear();
-            filesListBox.Items.Clear();
-            passwordTextBox.Clear();
-            selectedFiles1.Clear();
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "All files (*.*)|*.*";
-            ofd.FilterIndex = 1;
-            ofd.Multiselect = true;
+        #region Password Generator Tab
 
-            if (ofd.ShowDialog() == DialogResult.OK)
+
+        private void GenerateButton_Click(object sender, EventArgs e)
+        {
+            PasswordGeneratorGeneratedPwdTextBox.Clear();
+            int count = (int)PasswordGeneratorCountNumeric.Value;
+            int length = (int)PasswordGeneratorLengthNumeric.Value;
+
+            for (int i = 0; i < count; i++)
             {
-                if (filesListBox != null)
+                string password = GeneratePassword(length); // Corrected: now returns a string
+                PasswordGeneratorGeneratedPwdTextBox.AppendText($"Password {i + 1}: {password}\r\n");
+            }
+
+            // Enable buttons if passwords were generated
+            bool hasPasswords = PasswordGeneratorGeneratedPwdTextBox.Text.Length > 0;
+            PasswordGeneratorCopyPwdBtn.Enabled = hasPasswords;
+            PasswordGeneratorExportPwdBtn.Enabled = hasPasswords;
+            PasswordGeneratorClearPwdGenBtn.Enabled = hasPasswords;
+        }
+
+
+        private void copyPwdBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text))
+            {
+                Clipboard.SetText(PasswordGeneratorGeneratedPwdTextBox.Text);
+                PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
+                PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
+
+                MessageBox.Show("Passwords Copied!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("There is no passwords to copy!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void exportPwdBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+
+            if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text) && saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
-                    foreach (string file in ofd.FileNames)
-                    {
-                        if (!selectedFiles1.Contains(file))
-                        {
-                            selectedFiles1.Add(file);
-                            filesListBox.Items.Add(Path.GetFileName(file));
-                        }
-                    }
+                    sw.Write(PasswordGeneratorGeneratedPwdTextBox.Text);
+                    MessageBox.Show("Passwords successfully exported to TXT file!", "CypherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
+                    PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
+
                 }
-                if (FilesNumber != null)
-                    FilesNumber.Text = $"{selectedFiles1.Count} files selected";
             }
+            else
+            {
+                MessageBox.Show("There is no passwords to export!", "CypherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
-        private string GeneratePassword(int length = 16)
+        private void clearPwdGenBtn_Click(object sender, EventArgs e)
         {
-            const string uppercase = "NZAYBXCWDVEUFTGSHRIJPKOLM";
-            const string lowercase = "mlokpjirhsgtfuevdwcxbyazn";
-            const string numbers = "73281564";
-            const string special = "!@)#}$%>&*(+=]{<?[";
-
-            // Ensure length is divisible by 4
-            length = length - (length % 4);
-            if (length < 16) length = 16; // Minimum length of 8 to ensure 2 chars of each type
-
-            var random = new Random();
-            var chars = new char[length];
-            int quarterLength = length / 4;
-
-            // Fill exactly 1/4 with lowercase
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[i] = lowercase[random.Next(lowercase.Length)];
-            }
-
-            // Fill exactly 1/4 with numbers
-            for (int i = quarterLength * 2; i < quarterLength * 3; i++)
-            {
-                chars[i] = numbers[random.Next(numbers.Length)];
-            }
-
-            // Fill exactly 1/4 with uppercase
-            for (int i = quarterLength; i < quarterLength * 2; i++)
-            {
-                chars[i] = uppercase[random.Next(uppercase.Length)];
-            }
-
-            // Fill exactly 1/4 with special characters
-            for (int i = quarterLength * 3; i < length; i++)
-            {
-                chars[i] = special[random.Next(special.Length)];
-            }
-
-            // Shuffle the entire password
-            return new string(chars.OrderBy(x => random.Next()).ToArray());
+            PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
+            PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
+            PasswordGeneratorGeneratedPwdTextBox.Clear();
         }
 
+        #endregion
 
+        #region Password Manager Tab
 
-        private void GeneratePasswordButton_Click(object sender, EventArgs e)
+        private void addButton_Click_1(object sender, EventArgs e)
         {
-            passwordTextBox.Text = GeneratePassword();
+            if (string.IsNullOrEmpty(websiteTxtBox.Text) || string.IsNullOrEmpty(usernameTxtBox.Text) || string.IsNullOrEmpty(passwordTxtBox.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                PasswordEntry entry = new PasswordEntry
+                {
+                    Website = websiteTxtBox.Text,
+                    Username = usernameTxtBox.Text,
+                    Password = passwordTxtBox.Text
+                };
+                db.AddEntry(entry);
+                LoadData();
+                ClearInputFields();
+                MessageBox.Show("Entry added successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
+
+        private void editButton_Click_1(object sender, EventArgs e)
+        {
+            if (PasswordManagerDGV.CurrentRow != null)
+            {
+
+                int id = (int)PasswordManagerDGV.CurrentRow.Cells["Id"].Value;
+                var entry = db.GetAllEntries().FirstOrDefault(e => e.Id == id);
+                if (entry != null)
+                {
+                    entry.Website = websiteTxtBox.Text;
+                    entry.Username = usernameTxtBox.Text;
+                    entry.Password = passwordTxtBox.Text;
+                    db.UpdateEntry(entry);
+                    MessageBox.Show("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}");
+
+                    LoadData();
+                    ClearInputFields();
+                }
+            }
+            else MessageBox.Show("Please select an entry to edit.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void deleteButton_Click_1(object sender, EventArgs e)
+        {
+            if (PasswordManagerDGV.CurrentRow != null)
+            {
+                int id = (int)PasswordManagerDGV.CurrentRow.Cells[0].Value;
+                db.DeleteEntry(id);
+                LoadData();
+                ClearInputFields();
+            }
+            else MessageBox.Show("Please select an entry to delete.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ClearBtn_Click(object sender, EventArgs e)
+        {
+            ClearInputFields();
+        }
+
+        private void ClearInputFields()
+        {
+            websiteTxtBox.Clear();
+            usernameTxtBox.Clear();
+            passwordTxtBox.Clear();
+            LoadData();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
+        }
+
+        #endregion
+
+        #region Files Encryptor Tab
 
         private void BackupPasswordButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(passwordTextBox.Text))
+            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password to backup.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter a password to backup.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
+            SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Password files (*.pwd)|*.pwd|All files (*.*)|*.*";
             sfd.FilterIndex = 1;
             sfd.DefaultExt = "pwd";
@@ -195,21 +269,50 @@ namespace CipherSync
             {
                 try
                 {
-                    byte[] encryptedPassword = EncryptPassword(passwordTextBox.Text);
+                    byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
                     File.WriteAllBytes(sfd.FileName, encryptedPassword);
-                    MessageBox.Show("Password backup has been saved. Keep this file safe!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Password backup has been saved. Keep this file safe!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error saving password backup: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error saving password backup: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
         }
 
+        private void BrowseFiles_Click(object sender, EventArgs e)
+        {
+            FileEncryptionFilesNumberTxtBox.Clear();
+            FilesEncryptionFilesListBox.Items.Clear();
+            selectedFiles1.Clear();
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "All files (*.*)|*.*";
+            ofd.FilterIndex = 1;
+            ofd.Multiselect = true;
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                if (FilesEncryptionFilesListBox != null)
+                {
+                    foreach (string file in ofd.FileNames)
+                    {
+                        if (!selectedFiles1.Contains(file))
+                        {
+                            selectedFiles1.Add(file);
+                            FilesEncryptionFilesListBox.Items.Add(Path.GetFileName(file));
+                        }
+                    }
+                }
+                if (FileEncryptionFilesNumberTxtBox != null)
+                    FileEncryptionFilesNumberTxtBox.Text = $"{selectedFiles1.Count} files selected";
+            }
+        }
+
+
         private void LoadBackupButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Password files (*.pwd)|*.pwd|All files (*.*)|*.*";
             ofd.FilterIndex = 1;
 
@@ -219,16 +322,20 @@ namespace CipherSync
                 {
                     byte[] encryptedPassword = File.ReadAllBytes(ofd.FileName);
                     string decryptedPassword = DecryptPassword(encryptedPassword);
-                    if (passwordTextBox != null)
+                    if (FilesEncryptionEnterPwdTxtBox != null)
                     {
-                        passwordTextBox.Text = decryptedPassword;
+                        FilesEncryptionEnterPwdTxtBox.Text = decryptedPassword;
                     }
-                    MessageBox.Show("Password has been loaded from backup.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Password has been loaded from backup.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading password backup: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error loading password backup: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("No file selected.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
         }
@@ -277,13 +384,13 @@ namespace CipherSync
 
             if (selectedFiles1.Count == 0)
             {
-                MessageBox.Show("Please select files first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select files first.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (string.IsNullOrEmpty(passwordTextBox.Text))
+            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter a password.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -299,22 +406,22 @@ namespace CipherSync
                     {
                         try
                         {
-                            await ProcessFileInPlace(file, passwordTextBox.Text, true);
+                            await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
 
                             progressBar.Invoke(new Action(() => UpdateProgress(++progressBar.Value, selectedFiles1.Count)));
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     });
                 });
 
-                MessageBox.Show("All files encrypted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("All files encrypted successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during encryption: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error during encryption: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -326,13 +433,13 @@ namespace CipherSync
         {
             if (selectedFiles1.Count == 0)
             {
-                MessageBox.Show("Please select files first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select files first.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (string.IsNullOrEmpty(passwordTextBox.Text))
+            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter a password.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -348,22 +455,22 @@ namespace CipherSync
                     {
                         try
                         {
-                            await ProcessFileInPlace(file, passwordTextBox.Text, false);
+                            await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
 
                             progressBar.Invoke(new Action(() => UpdateProgress(++progressBar.Value, selectedFiles1.Count)));
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     });
                 });
 
-                MessageBox.Show("All files decrypted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("All files decrypted successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during decryption: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error during decryption: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -371,17 +478,14 @@ namespace CipherSync
             }
         }
 
-
-
-
         private void DisableControls()
         {
             foreach (var button in Controls.OfType<Button>())
             {
                 button.Enabled = false;
             }
-            if (passwordTextBox.Text != null)
-                passwordTextBox.Enabled = false;
+            if (FilesEncryptionEnterPwdTxtBox.Text != null)
+                FilesEncryptionEnterPwdTxtBox.Enabled = false;
         }
 
         private void EnableControls()
@@ -390,8 +494,8 @@ namespace CipherSync
             {
                 button.Enabled = true;
             }
-            if (passwordTextBox.Text != null)
-                passwordTextBox.Enabled = true;
+            if (FilesEncryptionEnterPwdTxtBox.Text != null)
+                FilesEncryptionEnterPwdTxtBox.Enabled = true;
         }
 
         private async Task ProcessFileInPlace(string filePath, string password, bool encrypt)
@@ -481,9 +585,9 @@ namespace CipherSync
         }
         private void clear_Click(object sender, EventArgs e)
         {
-            FilesNumber.Clear();
-            filesListBox.Items.Clear();
-            passwordTextBox.Clear();
+            FileEncryptionFilesNumberTxtBox.Clear();
+            FilesEncryptionFilesListBox.Items.Clear();
+            FilesEncryptionEnterPwdTxtBox.Clear();
             selectedFiles1.Clear();
             progressBar.Visible = false;
         }
@@ -510,6 +614,50 @@ namespace CipherSync
                     progressBar.Maximum = maximum;
                     progressBar.Value = Math.Min(value, maximum);
                 }
+            }
+        }
+
+        private void GeneratePasswordButton_Click(object sender, EventArgs e)
+        {
+            FilesEncryptionEnterPwdTxtBox.Text = GeneratePassword();
+        }
+
+        #endregion
+
+        #region Files Renamer Tab
+
+        private void BrowseFilesBtnToRename_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "All files (*.*)|*.*";
+            ofd.FilterIndex = 1;
+            ofd.Multiselect = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                selectedFiles2.Clear();
+                RegexFilesListView.Items.Clear();
+
+                try
+                {
+                    foreach (string filePath in ofd.FileNames)
+                    {
+                        var fileInfo = new FileInfo(filePath);
+                        selectedFiles2.Add(fileInfo.FullName);
+                        var item = new ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
+                        RegexFilesListView.Items.Add(item);
+                    }
+
+                    RegexPreviewChangesBtn.Enabled = selectedFiles2.Count > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading files!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+
+                MessageBox.Show("No files selected!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -561,45 +709,15 @@ namespace CipherSync
                 newName = newName.Replace(invalidChar, '_');
             }
 
-            counter += (int)incrementByNumeric.Value;
+            counter += (int)RegexIncrementNumeric.Value;
             return newName;
         }
 
-        private void BrowseFilesBtnToRename_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Filter = "All files (*.*)|*.*";
-            ofd.FilterIndex = 1;
-            ofd.Multiselect = true;
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                selectedFiles2.Clear();
-                filesListView.Items.Clear();
 
-                try
-                {
-                    foreach (string filePath in ofd.FileNames)
-                    {
-                        var fileInfo = new FileInfo(filePath);
-                        selectedFiles2.Add(fileInfo.FullName);
-                        var item = new ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
-                        filesListView.Items.Add(item);
-                    }
-
-                    previewBtn.Enabled = selectedFiles2.Count > 0;
-                    statusLabel.Text = $"Loaded {selectedFiles2.Count} files";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading files: {ex.Message}", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
 
         private void previewBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(patternTextBox.Text))
+            if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
             {
                 MessageBox.Show("Please enter a regex pattern.", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -608,12 +726,12 @@ namespace CipherSync
 
             try
             {
-                filesListView.Items.Clear();
+                RegexFilesListView.Items.Clear();
                 bool hasChanges = false;
 
                 // Initialize counter
                 int counter = 1;
-                if (useIncrementCheckBox.Checked && int.TryParse(startNumberNumeric.Text, out int startNumber))
+                if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
                 {
                     counter = startNumber;
                 }
@@ -621,19 +739,19 @@ namespace CipherSync
                 foreach (var file in selectedFiles2)
                 {
                     FileInfo fileInfo = new FileInfo(file);
-                    string newName = useIncrementCheckBox.Checked
-                        ? GetNewFileName(fileInfo, patternTextBox.Text, replacementTextBox.Text, ref counter)
-                        : new Regex(patternTextBox.Text).Replace(fileInfo.Name, replacementTextBox.Text);
+                    string newName = RegexUseIncrementCheckBox.Checked
+                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
+                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
 
                     var item = new ListViewItem(new[] { fileInfo.Name, newName });
-                    filesListView.Items.Add(item);
+                    RegexFilesListView.Items.Add(item);
 
                     if (fileInfo.Name != newName)
                         hasChanges = true;
                 }
 
-                renameButton.Enabled = hasChanges;
-                statusLabel.Text = "Preview generated. Click 'Rename Files' to apply changes.";
+                RegexRenameFilesBtn.Enabled = hasChanges;
+
             }
             catch (ArgumentException ex)
             {
@@ -649,7 +767,7 @@ namespace CipherSync
 
             // Initialize counter
             int counter = 1;
-            if (useIncrementCheckBox.Checked && int.TryParse(startNumberNumeric.Text, out int startNumber))
+            if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
             {
                 counter = startNumber;
             }
@@ -660,9 +778,9 @@ namespace CipherSync
                 try
                 {
 
-                    string newName = useIncrementCheckBox.Checked
-                        ? GetNewFileName(fileInfo, patternTextBox.Text, replacementTextBox.Text, ref counter)
-                        : new Regex(patternTextBox.Text).Replace(fileInfo.Name, replacementTextBox.Text);
+                    string newName = RegexUseIncrementCheckBox.Checked
+                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
+                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
 
                     if (fileInfo.Name != newName)
                     {
@@ -689,7 +807,7 @@ namespace CipherSync
             if (successCount > 0)
             {
                 selectedFiles2.Clear();
-                filesListView.Items.Clear();
+                RegexFilesListView.Items.Clear();
                 System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
                 foreach (string filePath in ofd.FileNames)
                 {
@@ -697,7 +815,7 @@ namespace CipherSync
                     string fileName = fileInfo.Name;
                     selectedFiles2.Add(fileName);
                     var item = new ListViewItem(new[] { fileInfo.Name, fileInfo.Name });
-                    filesListView.Items.Add(item);
+                    RegexFilesListView.Items.Add(item);
                 }
             }
 
@@ -711,90 +829,80 @@ namespace CipherSync
             MessageBox.Show(message, "Rename Results",
                 MessageBoxButtons.OK, errors.Any() ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
 
-            statusLabel.Text = $"Renamed {successCount} files. {errors.Count} errors.";
-            renameButton.Enabled = false;
+
+            RegexRenameFilesBtn.Enabled = false;
 
         }
 
-        private void GenerateButton_Click(object sender, EventArgs e)
+        private void RegexClearBtn_Click(object sender, EventArgs e)
         {
-            resultsTextBox.Clear();
-            int count = (int)countNumeric.Value;
-            int length = (int)lengthNumeric.Value;
+            RegexPatternTxtBox.Clear();
+            RegexReplacementTxtBox.Clear();
+            RegexFilesListView.Items.Clear();
+            RegexUseIncrementCheckBox.Checked = false;
+            RegexStartFromNumeric.Value = 0;
+            RegexIncrementNumeric.Value = 0;
+        }
 
-            for (int i = 0; i < count; i++)
+        private void RegexHelpBtn_Click(object sender, EventArgs e)
+        {
+            string url = "https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference"; 
+            Process.Start(new ProcessStartInfo(url) 
+            { 
+                UseShellExecute = true 
+            }
+            );
+        }
+
+        #endregion
+
+
+
+
+        private string GeneratePassword(int length = 16)
+        {
+            const string uppercase = "NZAYBXCWDVEUFTGSHRIJPKOLM";
+            const string lowercase = "mlokpjirhsgtfuevdwcxbyazn";
+            const string numbers = "73281564";
+            const string special = "!@)#}$%>&*(+=]{<?[";
+
+            // Ensure length is divisible by 4
+            length = length - (length % 4);
+            if (length < 16) length = 16; // Minimum length of 16 to ensure 4 chars of each type
+
+            var random = new Random();
+            var chars = new char[length];
+            int quarterLength = length / 4;
+
+            // Fill exactly 1/4 with lowercase
+            for (int i = 0; i < quarterLength; i++)
             {
-                string password = GeneratePassword(length); // Corrected: now returns a string
-                resultsTextBox.AppendText($"Password {i + 1}: {password}\r\n");
+                chars[i] = lowercase[random.Next(lowercase.Length)];
             }
 
-            // Enable buttons if passwords were generated
-            bool hasPasswords = resultsTextBox.Text.Length > 0;
-            copyButton.Enabled = hasPasswords;
-            exportButton.Enabled = hasPasswords;
-            clearButton.Enabled = hasPasswords;
-        }
-        private void addButton_Click_1(object sender, EventArgs e)
-        {
-            var entry = new PasswordEntry
+            // Fill exactly 1/4 with numbers
+            for (int i = quarterLength * 2; i < quarterLength * 3; i++)
             {
-                Website = websiteTextBox.Text,
-                Username = usernameTextBox.Text,
-                Password = passwordTxtBox.Text
-            };
-            db.AddEntry(entry);
-            LoadData();
-            ClearInputFields();
-        }
-
-        private void editButton_Click_1(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow != null)
-            {
-
-                int id = (int)dataGridView1.CurrentRow.Cells["Id"].Value;
-                var entry = db.GetAllEntries().FirstOrDefault(e => e.Id == id);
-                if (entry != null)
-                {
-                    entry.Website = websiteTextBox.Text;
-                    entry.Username = usernameTextBox.Text;
-                    entry.Password = passwordTxtBox.Text;
-                    db.UpdateEntry(entry);
-                    MessageBox.Show($"Updating Id: {id}, Website: {entry.Website}, Username: {entry.Username}, Password: {entry.Password}");
-
-                    LoadData();
-                    ClearInputFields();
-                }
+                chars[i] = numbers[random.Next(numbers.Length)];
             }
-        }
 
-        private void deleteButton_Click_1(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow != null)
+            // Fill exactly 1/4 with uppercase
+            for (int i = quarterLength; i < quarterLength * 2; i++)
             {
-                int id = (int)dataGridView1.CurrentRow.Cells[0].Value;
-                db.DeleteEntry(id);
-                LoadData();
-                ClearInputFields();
+                chars[i] = uppercase[random.Next(uppercase.Length)];
             }
+
+            // Fill exactly 1/4 with special characters
+            for (int i = quarterLength * 3; i < length; i++)
+            {
+                chars[i] = special[random.Next(special.Length)];
+            }
+
+            // Shuffle the entire password
+            return new string(chars.OrderBy(x => random.Next()).ToArray());
         }
 
-        private void ClearBtn_Click(object sender, EventArgs e)
-        {
-            ClearInputFields();
-        }
-
-        private void ClearInputFields()
-        {
-            websiteTextBox.Clear();
-            usernameTextBox.Clear();
-            passwordTxtBox.Clear();
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
-        }
+        
     }
 }
 
