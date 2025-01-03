@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CipherSync
+namespace CipherShield
 {
     public static class SecureStorage
     {

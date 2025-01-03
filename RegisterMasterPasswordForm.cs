@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CipherSync
+namespace CipherShield
 {
     public partial class RegisterMasterPasswordForm : Form
     {

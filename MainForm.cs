@@ -7,12 +7,12 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CipherSync.Models;
-using CipherSync.Helpers;
+using CipherShield.Models;
+using CipherShield.Helpers;
 using System.Diagnostics;
 
 
-namespace CipherSync
+namespace CipherShield
 {
     public partial class MainForm : Form
     {
@@ -111,7 +111,7 @@ namespace CipherSync
 
             for (int i = 0; i < count; i++)
             {
-                string password = GeneratePassword(length); // Corrected: now returns a string
+                string password = GeneratePassword(length); 
                 PasswordGeneratorGeneratedPwdTextBox.AppendText($"Password {i + 1}: {password}\r\n");
             }
 

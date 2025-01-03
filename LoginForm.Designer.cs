@@ -1,4 +1,4 @@
-﻿namespace CipherSync
+﻿namespace CipherShield
 {
     partial class LoginForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             label1 = new System.Windows.Forms.Label();
             CancelLoginMasterPwdBtn = new System.Windows.Forms.Button();
             SubmitLoginPwdBtn = new System.Windows.Forms.Button();
@@ -106,13 +107,14 @@
             Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
             ForeColor = System.Drawing.SystemColors.ControlLightLight;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "CipherSync";
+            Text = "Cipher Shield";
             ResumeLayout(false);
             PerformLayout();
         }

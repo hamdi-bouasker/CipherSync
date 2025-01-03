@@ -1,10 +1,10 @@
-﻿using CipherSync.Models;
+﻿using CipherShield.Models;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
-namespace CipherSync.Helpers
+namespace CipherShield.Helpers
 {
     internal class DatabaseHelper
     {

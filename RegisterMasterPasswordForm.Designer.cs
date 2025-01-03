@@ -1,4 +1,4 @@
-﻿namespace CipherSync
+﻿namespace CipherShield
 {
     partial class RegisterMasterPasswordForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterMasterPasswordForm));
             SubmitMasterPwdBtn = new System.Windows.Forms.Button();
             RegisterMasterPwdTxtBox = new System.Windows.Forms.TextBox();
             CancelRegisterMasterPwdBtn = new System.Windows.Forms.Button();
@@ -114,13 +115,14 @@
             Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
             ForeColor = System.Drawing.SystemColors.ControlLightLight;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegisterMasterPasswordForm";
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "CypherSync";
+            Text = "Cypher Shield";
             ResumeLayout(false);
             PerformLayout();
         }

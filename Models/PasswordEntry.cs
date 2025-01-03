@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CipherSync.Models
+namespace CipherShield.Models
 {
     internal class PasswordEntry
     {
