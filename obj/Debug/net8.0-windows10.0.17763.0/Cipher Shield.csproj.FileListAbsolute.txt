@@ -1,7 +1,3 @@
-C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\icons8-security-lock-48.ico
-C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\icons8-security-lock-48.png
-C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\icons8-user-shield-48.ico
-C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\icons8-user-shield-48.png
 C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Cipher Shield.exe
 C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Cipher Shield.dll.config
 C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Cipher Shield.deps.json
@@ -77,3 +73,8 @@ C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net8.0-windows10.0.17763.0\CipherShi
 C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net8.0-windows10.0.17763.0\CipherShield.MainForm.resources
 C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net8.0-windows10.0.17763.0\CipherShield.Properties.Resources.resources
 C:\Users\hamdi\source\repos\P-GEN\obj\Debug\net8.0-windows10.0.17763.0\CipherShield.RegisterMasterPasswordForm.resources
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\error.png
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\info.png
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\success.png
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\warning.png
+C:\Users\hamdi\source\repos\P-GEN\bin\Debug\net8.0-windows10.0.17763.0\Icons\icons8-close-17.png

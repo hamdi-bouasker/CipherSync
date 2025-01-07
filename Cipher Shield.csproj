@@ -8,25 +8,31 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <UseWPF>True</UseWPF>
     <StartupObject>CipherShield.Program</StartupObject>
-    <ApplicationIcon>icons\icons8-security-lock-48.ico</ApplicationIcon>
-    <PackageIcon>icons8-security-lock-48.png</PackageIcon>
+    <ApplicationIcon>Icons\securityLockICO.ico</ApplicationIcon>
+    <PackageIcon>securityLockPNG.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Icons\icons8-security-lock-48.ico" />
-    <None Remove="Icons\icons8-user-shield-48.ico" />
-    <None Remove="Icons\icons8-user-shield-48.png" />
+    <None Remove="Icons\error.png" />
+    <None Remove="Icons\icons8-close-17.png" />
+    <None Remove="Icons\info.png" />
+    <None Remove="Icons\success.png" />
+    <None Remove="Icons\warning.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\icons8-security-lock-48.ico">
+    <Content Include="Icons\error.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\icons8-security-lock-48.png">
+    <Content Include="Icons\icons8-close-17.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\icons8-user-shield-48.ico">
+    <Content Include="Icons\info.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\icons8-user-shield-48.png">
+    <Content Include="Icons\securityLockICO.ico" />
+    <Content Include="Icons\success.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\warning.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -47,7 +53,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Icons\icons8-security-lock-48.png">
+    <None Update="Icons\securityLockPNG.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

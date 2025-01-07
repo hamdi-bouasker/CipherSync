@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1 = new System.Windows.Forms.TabControl();
             tabPage3 = new System.Windows.Forms.TabPage();
@@ -84,10 +85,21 @@
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             tabPage5 = new System.Windows.Forms.TabPage();
+            homeCarousselLbl = new System.Windows.Forms.Label();
+            SubmitNewPasswordBtn = new System.Windows.Forms.Button();
+            RepeatNewPasswordTxtBox = new System.Windows.Forms.TextBox();
+            NewPasswordTxtBox = new System.Windows.Forms.TextBox();
+            oldPasswordTxtBox = new System.Windows.Forms.TextBox();
+            label11 = new System.Windows.Forms.Label();
             tabPage6 = new System.Windows.Forms.TabPage();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            label12 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
+            CloseBtn = new System.Windows.Forms.Button();
+            MinimizeBtn = new System.Windows.Forms.Button();
+            timer1 = new System.Windows.Forms.Timer(components);
             tabControl1.SuspendLayout();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PasswordGeneratorLengthNumeric).BeginInit();
@@ -98,6 +110,7 @@
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)RegexIncrementNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).BeginInit();
+            tabPage5.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -109,7 +122,7 @@
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Controls.Add(tabPage6);
             tabControl1.HotTrack = true;
-            tabControl1.Location = new System.Drawing.Point(12, 12);
+            tabControl1.Location = new System.Drawing.Point(12, 56);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new System.Drawing.Size(760, 552);
@@ -139,7 +152,7 @@
             // PasswordGeneratorClearPwdGenBtn
             // 
             PasswordGeneratorClearPwdGenBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordGeneratorClearPwdGenBtn.Location = new System.Drawing.Point(615, 340);
+            PasswordGeneratorClearPwdGenBtn.Location = new System.Drawing.Point(615, 373);
             PasswordGeneratorClearPwdGenBtn.Name = "PasswordGeneratorClearPwdGenBtn";
             PasswordGeneratorClearPwdGenBtn.Size = new System.Drawing.Size(119, 31);
             PasswordGeneratorClearPwdGenBtn.TabIndex = 8;
@@ -150,7 +163,7 @@
             // PasswordGeneratorGeneratePwdButton
             // 
             PasswordGeneratorGeneratePwdButton.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordGeneratorGeneratePwdButton.Location = new System.Drawing.Point(190, 428);
+            PasswordGeneratorGeneratePwdButton.Location = new System.Drawing.Point(195, 449);
             PasswordGeneratorGeneratePwdButton.Name = "PasswordGeneratorGeneratePwdButton";
             PasswordGeneratorGeneratePwdButton.Size = new System.Drawing.Size(236, 31);
             PasswordGeneratorGeneratePwdButton.TabIndex = 9;
@@ -161,7 +174,7 @@
             // PasswordGeneratorCopyPwdBtn
             // 
             PasswordGeneratorCopyPwdBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordGeneratorCopyPwdBtn.Location = new System.Drawing.Point(615, 90);
+            PasswordGeneratorCopyPwdBtn.Location = new System.Drawing.Point(615, 123);
             PasswordGeneratorCopyPwdBtn.Name = "PasswordGeneratorCopyPwdBtn";
             PasswordGeneratorCopyPwdBtn.Size = new System.Drawing.Size(119, 31);
             PasswordGeneratorCopyPwdBtn.TabIndex = 6;
@@ -172,7 +185,7 @@
             // PasswordGeneratorExportPwdBtn
             // 
             PasswordGeneratorExportPwdBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordGeneratorExportPwdBtn.Location = new System.Drawing.Point(615, 213);
+            PasswordGeneratorExportPwdBtn.Location = new System.Drawing.Point(615, 246);
             PasswordGeneratorExportPwdBtn.Name = "PasswordGeneratorExportPwdBtn";
             PasswordGeneratorExportPwdBtn.Size = new System.Drawing.Size(119, 31);
             PasswordGeneratorExportPwdBtn.TabIndex = 7;
@@ -183,8 +196,9 @@
             // PasswordGeneratorGeneratedPwdTextBox
             // 
             PasswordGeneratorGeneratedPwdTextBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            PasswordGeneratorGeneratedPwdTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             PasswordGeneratorGeneratedPwdTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            PasswordGeneratorGeneratedPwdTextBox.Location = new System.Drawing.Point(44, 90);
+            PasswordGeneratorGeneratedPwdTextBox.Location = new System.Drawing.Point(44, 123);
             PasswordGeneratorGeneratedPwdTextBox.Multiline = true;
             PasswordGeneratorGeneratedPwdTextBox.Name = "PasswordGeneratorGeneratedPwdTextBox";
             PasswordGeneratorGeneratedPwdTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -194,7 +208,7 @@
             // 
             // PasswordGeneratorLengthNumeric
             // 
-            PasswordGeneratorLengthNumeric.Location = new System.Drawing.Point(517, 26);
+            PasswordGeneratorLengthNumeric.Location = new System.Drawing.Point(517, 56);
             PasswordGeneratorLengthNumeric.Minimum = new decimal(new int[] { 16, 0, 0, 0 });
             PasswordGeneratorLengthNumeric.Name = "PasswordGeneratorLengthNumeric";
             PasswordGeneratorLengthNumeric.Size = new System.Drawing.Size(80, 26);
@@ -203,7 +217,7 @@
             // 
             // PasswordGeneratorCountNumeric
             // 
-            PasswordGeneratorCountNumeric.Location = new System.Drawing.Point(214, 20);
+            PasswordGeneratorCountNumeric.Location = new System.Drawing.Point(213, 56);
             PasswordGeneratorCountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             PasswordGeneratorCountNumeric.Name = "PasswordGeneratorCountNumeric";
             PasswordGeneratorCountNumeric.Size = new System.Drawing.Size(80, 26);
@@ -213,7 +227,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(377, 28);
+            label8.Location = new System.Drawing.Point(374, 64);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(113, 18);
             label8.TabIndex = 1;
@@ -222,7 +236,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(41, 28);
+            label7.Location = new System.Drawing.Point(44, 64);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(144, 18);
             label7.TabIndex = 0;
@@ -253,7 +267,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(73, 210);
+            label10.Location = new System.Drawing.Point(73, 207);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(69, 18);
             label10.TabIndex = 21;
@@ -262,7 +276,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(73, 121);
+            label9.Location = new System.Drawing.Point(73, 128);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(62, 18);
             label9.TabIndex = 20;
@@ -271,7 +285,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(73, 172);
+            label6.Location = new System.Drawing.Point(73, 166);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(176, 18);
             label6.TabIndex = 19;
@@ -280,8 +294,9 @@
             // passwordTxtBox
             // 
             passwordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            passwordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             passwordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            passwordTxtBox.Location = new System.Drawing.Point(284, 207);
+            passwordTxtBox.Location = new System.Drawing.Point(284, 199);
             passwordTxtBox.Name = "passwordTxtBox";
             passwordTxtBox.Size = new System.Drawing.Size(389, 26);
             passwordTxtBox.TabIndex = 17;
@@ -290,8 +305,9 @@
             // websiteTxtBox
             // 
             websiteTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            websiteTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             websiteTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            websiteTxtBox.Location = new System.Drawing.Point(284, 113);
+            websiteTxtBox.Location = new System.Drawing.Point(284, 120);
             websiteTxtBox.Name = "websiteTxtBox";
             websiteTxtBox.Size = new System.Drawing.Size(389, 26);
             websiteTxtBox.TabIndex = 15;
@@ -300,8 +316,9 @@
             // usernameTxtBox
             // 
             usernameTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            usernameTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             usernameTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            usernameTxtBox.Location = new System.Drawing.Point(284, 164);
+            usernameTxtBox.Location = new System.Drawing.Point(284, 158);
             usernameTxtBox.Name = "usernameTxtBox";
             usernameTxtBox.Size = new System.Drawing.Size(389, 26);
             usernameTxtBox.TabIndex = 16;
@@ -394,14 +411,14 @@
             // FilesEncryptionFilesListBox
             // 
             FilesEncryptionFilesListBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
-            FilesEncryptionFilesListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            FilesEncryptionFilesListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             FilesEncryptionFilesListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             FilesEncryptionFilesListBox.FormattingEnabled = true;
             FilesEncryptionFilesListBox.ItemHeight = 18;
             FilesEncryptionFilesListBox.Location = new System.Drawing.Point(22, 73);
             FilesEncryptionFilesListBox.Name = "FilesEncryptionFilesListBox";
             FilesEncryptionFilesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            FilesEncryptionFilesListBox.Size = new System.Drawing.Size(493, 234);
+            FilesEncryptionFilesListBox.Size = new System.Drawing.Size(493, 218);
             FilesEncryptionFilesListBox.TabIndex = 12;
             // 
             // progressBar
@@ -427,11 +444,11 @@
             // FilesEncryptionEnterPwdTxtBox
             // 
             FilesEncryptionEnterPwdTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
-            FilesEncryptionEnterPwdTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            FilesEncryptionEnterPwdTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             FilesEncryptionEnterPwdTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             FilesEncryptionEnterPwdTxtBox.Location = new System.Drawing.Point(22, 379);
             FilesEncryptionEnterPwdTxtBox.Name = "FilesEncryptionEnterPwdTxtBox";
-            FilesEncryptionEnterPwdTxtBox.Size = new System.Drawing.Size(493, 19);
+            FilesEncryptionEnterPwdTxtBox.Size = new System.Drawing.Size(493, 26);
             FilesEncryptionEnterPwdTxtBox.TabIndex = 9;
             FilesEncryptionEnterPwdTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -531,12 +548,12 @@
             // FileEncryptionFilesNumberTxtBox
             // 
             FileEncryptionFilesNumberTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
-            FileEncryptionFilesNumberTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            FileEncryptionFilesNumberTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             FileEncryptionFilesNumberTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            FileEncryptionFilesNumberTxtBox.Location = new System.Drawing.Point(22, 24);
+            FileEncryptionFilesNumberTxtBox.Location = new System.Drawing.Point(22, 17);
             FileEncryptionFilesNumberTxtBox.Name = "FileEncryptionFilesNumberTxtBox";
             FileEncryptionFilesNumberTxtBox.ReadOnly = true;
-            FileEncryptionFilesNumberTxtBox.Size = new System.Drawing.Size(493, 19);
+            FileEncryptionFilesNumberTxtBox.Size = new System.Drawing.Size(493, 26);
             FileEncryptionFilesNumberTxtBox.TabIndex = 1;
             // 
             // tabPage2
@@ -568,7 +585,7 @@
             // RegexClearBtn
             // 
             RegexClearBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            RegexClearBtn.Location = new System.Drawing.Point(577, 350);
+            RegexClearBtn.Location = new System.Drawing.Point(577, 346);
             RegexClearBtn.Name = "RegexClearBtn";
             RegexClearBtn.Size = new System.Drawing.Size(130, 26);
             RegexClearBtn.TabIndex = 9;
@@ -579,11 +596,12 @@
             // RegexFilesListView
             // 
             RegexFilesListView.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            RegexFilesListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             RegexFilesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2 });
             RegexFilesListView.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             RegexFilesListView.Location = new System.Drawing.Point(33, 224);
             RegexFilesListView.Name = "RegexFilesListView";
-            RegexFilesListView.Size = new System.Drawing.Size(506, 276);
+            RegexFilesListView.Size = new System.Drawing.Size(506, 257);
             RegexFilesListView.TabIndex = 11;
             RegexFilesListView.UseCompatibleStateImageBehavior = false;
             RegexFilesListView.View = System.Windows.Forms.View.Details;
@@ -601,7 +619,7 @@
             // RegexHelpBtn
             // 
             RegexHelpBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            RegexHelpBtn.Location = new System.Drawing.Point(577, 474);
+            RegexHelpBtn.Location = new System.Drawing.Point(577, 455);
             RegexHelpBtn.Name = "RegexHelpBtn";
             RegexHelpBtn.Size = new System.Drawing.Size(130, 26);
             RegexHelpBtn.TabIndex = 10;
@@ -688,6 +706,7 @@
             // RegexReplacementTxtBox
             // 
             RegexReplacementTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            RegexReplacementTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             RegexReplacementTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             RegexReplacementTxtBox.Location = new System.Drawing.Point(150, 82);
             RegexReplacementTxtBox.Name = "RegexReplacementTxtBox";
@@ -697,6 +716,7 @@
             // RegexPatternTxtBox
             // 
             RegexPatternTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            RegexPatternTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             RegexPatternTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             RegexPatternTxtBox.Location = new System.Drawing.Point(150, 21);
             RegexPatternTxtBox.Name = "RegexPatternTxtBox";
@@ -724,13 +744,85 @@
             // tabPage5
             // 
             tabPage5.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            tabPage5.Controls.Add(homeCarousselLbl);
+            tabPage5.Controls.Add(SubmitNewPasswordBtn);
+            tabPage5.Controls.Add(RepeatNewPasswordTxtBox);
+            tabPage5.Controls.Add(NewPasswordTxtBox);
+            tabPage5.Controls.Add(oldPasswordTxtBox);
+            tabPage5.Controls.Add(label11);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 24);
+            tabPage5.Location = new System.Drawing.Point(4, 27);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 524);
+            tabPage5.Size = new System.Drawing.Size(752, 521);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
+            // 
+            // homeCarousselLbl
+            // 
+            homeCarousselLbl.BackColor = System.Drawing.Color.Transparent;
+            homeCarousselLbl.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            homeCarousselLbl.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            homeCarousselLbl.Location = new System.Drawing.Point(65, 449);
+            homeCarousselLbl.Name = "homeCarousselLbl";
+            homeCarousselLbl.Size = new System.Drawing.Size(620, 23);
+            homeCarousselLbl.TabIndex = 16;
+            homeCarousselLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SubmitNewPasswordBtn
+            // 
+            SubmitNewPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            SubmitNewPasswordBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            SubmitNewPasswordBtn.Location = new System.Drawing.Point(301, 346);
+            SubmitNewPasswordBtn.Name = "SubmitNewPasswordBtn";
+            SubmitNewPasswordBtn.Size = new System.Drawing.Size(131, 31);
+            SubmitNewPasswordBtn.TabIndex = 13;
+            SubmitNewPasswordBtn.Text = "Submit";
+            SubmitNewPasswordBtn.UseVisualStyleBackColor = true;
+            SubmitNewPasswordBtn.Click += SubmitNewPasswordBtn_Click;
+            // 
+            // RepeatNewPasswordTxtBox
+            // 
+            RepeatNewPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            RepeatNewPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            RepeatNewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            RepeatNewPasswordTxtBox.Location = new System.Drawing.Point(247, 277);
+            RepeatNewPasswordTxtBox.Name = "RepeatNewPasswordTxtBox";
+            RepeatNewPasswordTxtBox.PlaceholderText = "             Repeat new password";
+            RepeatNewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
+            RepeatNewPasswordTxtBox.TabIndex = 12;
+            // 
+            // NewPasswordTxtBox
+            // 
+            NewPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            NewPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            NewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            NewPasswordTxtBox.Location = new System.Drawing.Point(247, 210);
+            NewPasswordTxtBox.Name = "NewPasswordTxtBox";
+            NewPasswordTxtBox.PlaceholderText = "              Enter new password";
+            NewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
+            NewPasswordTxtBox.TabIndex = 11;
+            // 
+            // oldPasswordTxtBox
+            // 
+            oldPasswordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
+            oldPasswordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            oldPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            oldPasswordTxtBox.Location = new System.Drawing.Point(247, 150);
+            oldPasswordTxtBox.Name = "oldPasswordTxtBox";
+            oldPasswordTxtBox.PlaceholderText = "               Enter old Password";
+            oldPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
+            oldPasswordTxtBox.TabIndex = 10;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            label11.Location = new System.Drawing.Point(201, 61);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(345, 23);
+            label11.TabIndex = 7;
+            label11.Text = "Do you want to change your master password?";
             // 
             // tabPage6
             // 
@@ -752,18 +844,81 @@
             // 
             openFileDialog2.FileName = "openFileDialog2";
             // 
+            // label12
+            // 
+            label12.BackColor = System.Drawing.SystemColors.ControlLight;
+            label12.Dock = System.Windows.Forms.DockStyle.Top;
+            label12.Location = new System.Drawing.Point(0, 0);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(785, 27);
+            label12.TabIndex = 2;
+            // 
+            // label13
+            // 
+            label13.BackColor = System.Drawing.SystemColors.ControlLight;
+            label13.Image = (System.Drawing.Image)resources.GetObject("label13.Image");
+            label13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label13.Location = new System.Drawing.Point(0, 1);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(116, 26);
+            label13.TabIndex = 3;
+            label13.Text = "Cipher Shield";
+            label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // CloseBtn
+            // 
+            CloseBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            CloseBtn.FlatAppearance.BorderSize = 0;
+            CloseBtn.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ScrollBar;
+            CloseBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
+            CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            CloseBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
+            CloseBtn.Image = (System.Drawing.Image)resources.GetObject("CloseBtn.Image");
+            CloseBtn.Location = new System.Drawing.Point(760, 3);
+            CloseBtn.Name = "CloseBtn";
+            CloseBtn.Size = new System.Drawing.Size(20, 21);
+            CloseBtn.TabIndex = 4;
+            CloseBtn.UseVisualStyleBackColor = false;
+            CloseBtn.Click += CloseBtn_Click;
+            // 
+            // MinimizeBtn
+            // 
+            MinimizeBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            MinimizeBtn.FlatAppearance.BorderSize = 0;
+            MinimizeBtn.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ScrollBar;
+            MinimizeBtn.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLightLight;
+            MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            MinimizeBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
+            MinimizeBtn.Image = (System.Drawing.Image)resources.GetObject("MinimizeBtn.Image");
+            MinimizeBtn.Location = new System.Drawing.Point(734, 3);
+            MinimizeBtn.Name = "MinimizeBtn";
+            MinimizeBtn.Size = new System.Drawing.Size(20, 21);
+            MinimizeBtn.TabIndex = 5;
+            MinimizeBtn.UseVisualStyleBackColor = false;
+            MinimizeBtn.Click += MinimizeBtn_Click;
+            // 
+            // timer1
+            // 
+            timer1.Interval = 5000;
+            timer1.Tick += timer1_Tick;
+            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
-            ClientSize = new System.Drawing.Size(784, 576);
+            ClientSize = new System.Drawing.Size(785, 620);
+            Controls.Add(MinimizeBtn);
+            Controls.Add(CloseBtn);
+            Controls.Add(label13);
+            Controls.Add(label12);
             Controls.Add(tabControl1);
             Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
             Name = "MainForm";
+            SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Cipher Shield";
             tabControl1.ResumeLayout(false);
@@ -780,6 +935,8 @@
             tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)RegexIncrementNumeric).EndInit();
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).EndInit();
+            tabPage5.ResumeLayout(false);
+            tabPage5.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -843,6 +1000,17 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button RegexClearBtn;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button CloseBtn;
+        private System.Windows.Forms.Button MinimizeBtn;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button SubmitNewPasswordBtn;
+        private System.Windows.Forms.TextBox RepeatNewPasswordTxtBox;
+        private System.Windows.Forms.TextBox NewPasswordTxtBox;
+        private System.Windows.Forms.TextBox oldPasswordTxtBox;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label homeCarousselLbl;
     }
 }
 

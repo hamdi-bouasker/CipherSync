@@ -20,10 +20,13 @@ namespace CipherShield
         private List<string> selectedFiles2 = new List<string>();
         private readonly byte[] backupKey = { 132, 42, 53, 84, 75, 96, 37, 28, 99, 10, 11, 12, 13, 14, 15, 16 };
         private DatabaseHelper db;
+        private int counter = 0;
+        string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice.", "A stitch in time saves nine." };
 
         public MainForm()
         {
             InitializeComponent();
+            timer1.Start();
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
@@ -31,6 +34,8 @@ namespace CipherShield
             // Attach the Load event handler
             this.Load += new EventHandler(this.MainForm_Load);
         }
+
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -111,7 +116,7 @@ namespace CipherShield
 
             for (int i = 0; i < count; i++)
             {
-                string password = GeneratePassword(length); 
+                string password = GeneratePassword(length);
                 PasswordGeneratorGeneratedPwdTextBox.AppendText($"Password {i + 1}: {password}\r\n");
             }
 
@@ -846,10 +851,10 @@ namespace CipherShield
 
         private void RegexHelpBtn_Click(object sender, EventArgs e)
         {
-            string url = "https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference"; 
-            Process.Start(new ProcessStartInfo(url) 
-            { 
-                UseShellExecute = true 
+            string url = "https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference";
+            Process.Start(new ProcessStartInfo(url)
+            {
+                UseShellExecute = true
             }
             );
         }
@@ -902,7 +907,60 @@ namespace CipherShield
             return new string(chars.OrderBy(x => random.Next()).ToArray());
         }
 
-        
+        private void MainFormCloseBtn_MouseDown(object sender, MouseEventArgs e)
+        {
+            BackColor = System.Drawing.Color.GhostWhite;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            homeCarousselLbl.Text = hints[counter];
+            counter = (counter + 1) % hints.Length;
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void MinimizeBtn_Click(object sender, EventArgs e)
+        {
+            ActiveForm.WindowState = FormWindowState.Minimized;
+        }
+
+        private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
+        {
+            string currentPassword = SecureStorage.GetPassword();
+            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/encrypted_pwd_database.db";
+
+            if (oldPasswordTxtBox.Text != currentPassword)
+            {
+                MessageBox.Show("Current password is incorrect!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length == 0)
+            {
+                MessageBox.Show("Please enter a new password!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text != RepeatNewPasswordTxtBox.Text)
+            {
+                MessageBox.Show("New passwords do not match!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length < 8)
+            {
+                MessageBox.Show("New password must be at least 8 characters long!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            SecureStorage.ChangeDatabasePassword(databaseFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
+            SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
+            MessageBox.Show("Password changed successfully! Application will be restarted.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Application.Restart();
+        }
     }
 }
 

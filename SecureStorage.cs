@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace CipherShield
 {
@@ -31,6 +32,27 @@ namespace CipherShield
                 encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
             return Encoding.UTF8.GetString(decryptedPassword);
         }
+
+        public static void UpdatePassword(string newPassword) 
+        { 
+            SavePassword(newPassword); 
+        }
+
+        public static void ChangeDatabasePassword(string databaseFilePath, string oldPassword, string newPassword)
+        {
+            using (var connection = new SqliteConnection($"Data Source={databaseFilePath};Password={oldPassword};"))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand($"PRAGMA rekey = '{newPassword}';", connection))
+                {
+                    
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
     }
 
 
