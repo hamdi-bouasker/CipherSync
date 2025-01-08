@@ -42,17 +42,20 @@
             label8 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             tabPage4 = new System.Windows.Forms.TabPage();
+            flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            PasswordManagerAddBtn = new System.Windows.Forms.Button();
+            PasswordManagerUpdateBtn = new System.Windows.Forms.Button();
+            PasswordManagerDeleteBtn = new System.Windows.Forms.Button();
+            PasswordManagerExportBtn = new System.Windows.Forms.Button();
+            PasswordManagerPrintBtn = new System.Windows.Forms.Button();
+            PasswordManagerClearBtn = new System.Windows.Forms.Button();
             label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             passwordTxtBox = new System.Windows.Forms.TextBox();
             websiteTxtBox = new System.Windows.Forms.TextBox();
             usernameTxtBox = new System.Windows.Forms.TextBox();
-            PasswordManagerClearBtn = new System.Windows.Forms.Button();
             PasswordManagerDGV = new System.Windows.Forms.DataGridView();
-            PasswordManagerUpdateBtn = new System.Windows.Forms.Button();
-            PasswordManagerDeleteBtn = new System.Windows.Forms.Button();
-            PasswordManagerAddBtn = new System.Windows.Forms.Button();
             tabPage1 = new System.Windows.Forms.TabPage();
             FilesEncryptionFilesListBox = new System.Windows.Forms.ListBox();
             progressBar = new System.Windows.Forms.ProgressBar();
@@ -100,11 +103,13 @@
             CloseBtn = new System.Windows.Forms.Button();
             MinimizeBtn = new System.Windows.Forms.Button();
             timer1 = new System.Windows.Forms.Timer(components);
+            printDialog1 = new System.Windows.Forms.PrintDialog();
             tabControl1.SuspendLayout();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PasswordGeneratorLengthNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PasswordGeneratorCountNumeric).BeginInit();
             tabPage4.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PasswordManagerDGV).BeginInit();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -245,17 +250,14 @@
             // tabPage4
             // 
             tabPage4.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            tabPage4.Controls.Add(flowLayoutPanel1);
             tabPage4.Controls.Add(label10);
             tabPage4.Controls.Add(label9);
             tabPage4.Controls.Add(label6);
             tabPage4.Controls.Add(passwordTxtBox);
             tabPage4.Controls.Add(websiteTxtBox);
             tabPage4.Controls.Add(usernameTxtBox);
-            tabPage4.Controls.Add(PasswordManagerClearBtn);
             tabPage4.Controls.Add(PasswordManagerDGV);
-            tabPage4.Controls.Add(PasswordManagerUpdateBtn);
-            tabPage4.Controls.Add(PasswordManagerDeleteBtn);
-            tabPage4.Controls.Add(PasswordManagerAddBtn);
             tabPage4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             tabPage4.Location = new System.Drawing.Point(4, 24);
             tabPage4.Name = "tabPage4";
@@ -264,10 +266,90 @@
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Passwords Manager";
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(PasswordManagerAddBtn);
+            flowLayoutPanel1.Controls.Add(PasswordManagerUpdateBtn);
+            flowLayoutPanel1.Controls.Add(PasswordManagerDeleteBtn);
+            flowLayoutPanel1.Controls.Add(PasswordManagerExportBtn);
+            flowLayoutPanel1.Controls.Add(PasswordManagerPrintBtn);
+            flowLayoutPanel1.Controls.Add(PasswordManagerClearBtn);
+            flowLayoutPanel1.Location = new System.Drawing.Point(0, 22);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(55, 5, 5, 5);
+            flowLayoutPanel1.Size = new System.Drawing.Size(752, 37);
+            flowLayoutPanel1.TabIndex = 23;
+            // 
+            // PasswordManagerAddBtn
+            // 
+            PasswordManagerAddBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerAddBtn.Location = new System.Drawing.Point(58, 8);
+            PasswordManagerAddBtn.Name = "PasswordManagerAddBtn";
+            PasswordManagerAddBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerAddBtn.TabIndex = 11;
+            PasswordManagerAddBtn.Text = "Add";
+            PasswordManagerAddBtn.UseVisualStyleBackColor = true;
+            PasswordManagerAddBtn.Click += addButton_Click_1;
+            // 
+            // PasswordManagerUpdateBtn
+            // 
+            PasswordManagerUpdateBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerUpdateBtn.Location = new System.Drawing.Point(163, 8);
+            PasswordManagerUpdateBtn.Name = "PasswordManagerUpdateBtn";
+            PasswordManagerUpdateBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerUpdateBtn.TabIndex = 12;
+            PasswordManagerUpdateBtn.Text = "Update";
+            PasswordManagerUpdateBtn.UseVisualStyleBackColor = true;
+            PasswordManagerUpdateBtn.Click += editButton_Click_1;
+            // 
+            // PasswordManagerDeleteBtn
+            // 
+            PasswordManagerDeleteBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerDeleteBtn.Location = new System.Drawing.Point(268, 8);
+            PasswordManagerDeleteBtn.Name = "PasswordManagerDeleteBtn";
+            PasswordManagerDeleteBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerDeleteBtn.TabIndex = 13;
+            PasswordManagerDeleteBtn.Text = "Delete";
+            PasswordManagerDeleteBtn.UseVisualStyleBackColor = true;
+            PasswordManagerDeleteBtn.Click += deleteButton_Click_1;
+            // 
+            // PasswordManagerExportBtn
+            // 
+            PasswordManagerExportBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerExportBtn.Location = new System.Drawing.Point(373, 8);
+            PasswordManagerExportBtn.Name = "PasswordManagerExportBtn";
+            PasswordManagerExportBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerExportBtn.TabIndex = 22;
+            PasswordManagerExportBtn.Text = "Export";
+            PasswordManagerExportBtn.UseVisualStyleBackColor = true;
+            PasswordManagerExportBtn.Click += PasswordManagerExportBtn_Click;
+            // 
+            // PasswordManagerPrintBtn
+            // 
+            PasswordManagerPrintBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerPrintBtn.Location = new System.Drawing.Point(478, 8);
+            PasswordManagerPrintBtn.Name = "PasswordManagerPrintBtn";
+            PasswordManagerPrintBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerPrintBtn.TabIndex = 24;
+            PasswordManagerPrintBtn.Text = "Print";
+            PasswordManagerPrintBtn.UseVisualStyleBackColor = true;
+            PasswordManagerPrintBtn.Click += PasswordManagerPrintBtn_Click;
+            // 
+            // PasswordManagerClearBtn
+            // 
+            PasswordManagerClearBtn.ForeColor = System.Drawing.SystemColors.Desktop;
+            PasswordManagerClearBtn.Location = new System.Drawing.Point(583, 8);
+            PasswordManagerClearBtn.Name = "PasswordManagerClearBtn";
+            PasswordManagerClearBtn.Size = new System.Drawing.Size(99, 26);
+            PasswordManagerClearBtn.TabIndex = 14;
+            PasswordManagerClearBtn.Text = "Clear";
+            PasswordManagerClearBtn.UseVisualStyleBackColor = true;
+            PasswordManagerClearBtn.Click += ClearBtn_Click;
+            // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(73, 207);
+            label10.Location = new System.Drawing.Point(73, 176);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(69, 18);
             label10.TabIndex = 21;
@@ -276,7 +358,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(73, 128);
+            label9.Location = new System.Drawing.Point(73, 97);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(62, 18);
             label9.TabIndex = 20;
@@ -285,7 +367,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(73, 166);
+            label6.Location = new System.Drawing.Point(73, 135);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(176, 18);
             label6.TabIndex = 19;
@@ -296,7 +378,7 @@
             passwordTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             passwordTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             passwordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            passwordTxtBox.Location = new System.Drawing.Point(284, 199);
+            passwordTxtBox.Location = new System.Drawing.Point(284, 168);
             passwordTxtBox.Name = "passwordTxtBox";
             passwordTxtBox.Size = new System.Drawing.Size(389, 26);
             passwordTxtBox.TabIndex = 17;
@@ -307,7 +389,7 @@
             websiteTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             websiteTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             websiteTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            websiteTxtBox.Location = new System.Drawing.Point(284, 120);
+            websiteTxtBox.Location = new System.Drawing.Point(284, 89);
             websiteTxtBox.Name = "websiteTxtBox";
             websiteTxtBox.Size = new System.Drawing.Size(389, 26);
             websiteTxtBox.TabIndex = 15;
@@ -318,22 +400,11 @@
             usernameTxtBox.BackColor = System.Drawing.Color.FromArgb(41, 42, 45);
             usernameTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             usernameTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            usernameTxtBox.Location = new System.Drawing.Point(284, 158);
+            usernameTxtBox.Location = new System.Drawing.Point(284, 127);
             usernameTxtBox.Name = "usernameTxtBox";
             usernameTxtBox.Size = new System.Drawing.Size(389, 26);
             usernameTxtBox.TabIndex = 16;
             usernameTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // PasswordManagerClearBtn
-            // 
-            PasswordManagerClearBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordManagerClearBtn.Location = new System.Drawing.Point(543, 65);
-            PasswordManagerClearBtn.Name = "PasswordManagerClearBtn";
-            PasswordManagerClearBtn.Size = new System.Drawing.Size(130, 26);
-            PasswordManagerClearBtn.TabIndex = 14;
-            PasswordManagerClearBtn.Text = "Clear";
-            PasswordManagerClearBtn.UseVisualStyleBackColor = true;
-            PasswordManagerClearBtn.Click += ClearBtn_Click;
             // 
             // PasswordManagerDGV
             // 
@@ -346,44 +417,11 @@
             PasswordManagerDGV.BackgroundColor = System.Drawing.Color.FromArgb(41, 42, 45);
             PasswordManagerDGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
             PasswordManagerDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            PasswordManagerDGV.Location = new System.Drawing.Point(73, 249);
+            PasswordManagerDGV.Location = new System.Drawing.Point(73, 218);
             PasswordManagerDGV.Name = "PasswordManagerDGV";
             PasswordManagerDGV.Size = new System.Drawing.Size(600, 254);
             PasswordManagerDGV.TabIndex = 14;
             PasswordManagerDGV.CellClick += dataGridView1_CellClick;
-            // 
-            // PasswordManagerUpdateBtn
-            // 
-            PasswordManagerUpdateBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordManagerUpdateBtn.Location = new System.Drawing.Point(227, 65);
-            PasswordManagerUpdateBtn.Name = "PasswordManagerUpdateBtn";
-            PasswordManagerUpdateBtn.Size = new System.Drawing.Size(130, 26);
-            PasswordManagerUpdateBtn.TabIndex = 12;
-            PasswordManagerUpdateBtn.Text = "Update";
-            PasswordManagerUpdateBtn.UseVisualStyleBackColor = true;
-            PasswordManagerUpdateBtn.Click += editButton_Click_1;
-            // 
-            // PasswordManagerDeleteBtn
-            // 
-            PasswordManagerDeleteBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordManagerDeleteBtn.Location = new System.Drawing.Point(384, 65);
-            PasswordManagerDeleteBtn.Name = "PasswordManagerDeleteBtn";
-            PasswordManagerDeleteBtn.Size = new System.Drawing.Size(130, 26);
-            PasswordManagerDeleteBtn.TabIndex = 13;
-            PasswordManagerDeleteBtn.Text = "Delete";
-            PasswordManagerDeleteBtn.UseVisualStyleBackColor = true;
-            PasswordManagerDeleteBtn.Click += deleteButton_Click_1;
-            // 
-            // PasswordManagerAddBtn
-            // 
-            PasswordManagerAddBtn.ForeColor = System.Drawing.SystemColors.Desktop;
-            PasswordManagerAddBtn.Location = new System.Drawing.Point(73, 65);
-            PasswordManagerAddBtn.Name = "PasswordManagerAddBtn";
-            PasswordManagerAddBtn.Size = new System.Drawing.Size(130, 26);
-            PasswordManagerAddBtn.TabIndex = 11;
-            PasswordManagerAddBtn.Text = "Add";
-            PasswordManagerAddBtn.UseVisualStyleBackColor = true;
-            PasswordManagerAddBtn.Click += addButton_Click_1;
             // 
             // tabPage1
             // 
@@ -810,7 +848,7 @@
             oldPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             oldPasswordTxtBox.Location = new System.Drawing.Point(247, 150);
             oldPasswordTxtBox.Name = "oldPasswordTxtBox";
-            oldPasswordTxtBox.PlaceholderText = "               Enter old Password";
+            oldPasswordTxtBox.PlaceholderText = "               Enter current Password";
             oldPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             oldPasswordTxtBox.TabIndex = 10;
             // 
@@ -902,6 +940,10 @@
             timer1.Interval = 5000;
             timer1.Tick += timer1_Tick;
             // 
+            // printDialog1
+            // 
+            printDialog1.UseEXDialog = true;
+            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -928,6 +970,7 @@
             ((System.ComponentModel.ISupportInitialize)PasswordGeneratorCountNumeric).EndInit();
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)PasswordManagerDGV).EndInit();
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
@@ -1011,6 +1054,10 @@
         private System.Windows.Forms.TextBox oldPasswordTxtBox;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label homeCarousselLbl;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button PasswordManagerExportBtn;
+        private System.Windows.Forms.Button PasswordManagerPrintBtn;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }
 

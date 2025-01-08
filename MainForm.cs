@@ -10,6 +10,13 @@ using System.Windows.Forms;
 using CipherShield.Models;
 using CipherShield.Helpers;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Printing;
+using Microsoft.Toolkit.Uwp.Notifications;
+using System.Text;
+using System.Security.Policy;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 
 namespace CipherShield
@@ -22,7 +29,7 @@ namespace CipherShield
         private DatabaseHelper db;
         private int counter = 0;
         string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice.", "A stitch in time saves nine." };
-
+        
         public MainForm()
         {
             InitializeComponent();
@@ -34,9 +41,6 @@ namespace CipherShield
             // Attach the Load event handler
             this.Load += new EventHandler(this.MainForm_Load);
         }
-
-
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
@@ -84,6 +88,21 @@ namespace CipherShield
             }
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            homeCarousselLbl.Text = hints[counter];
+            counter = (counter + 1) % hints.Length;
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void MinimizeBtn_Click(object sender, EventArgs e)
+        {
+            ActiveForm.WindowState = FormWindowState.Minimized;
+        }
         private void LoadData()
         {
             var entries = db.GetAllEntries().ToList();
@@ -105,6 +124,119 @@ namespace CipherShield
             }
         }
 
+        private string GeneratePassword(int length = 16)
+        {
+            const string uppercase = "NZAYBXCWDVEUFTGSHRIJPKOLM";
+            const string lowercase = "mlokpjirhsgtfuevdwcxbyazn";
+            const string numbers = "73281564";
+            const string special = "]!@-)#}=/$%>|&*(+{<?[";
+
+            // Ensure length is divisible by 4
+            length = length - (length % 4);
+
+            var chars = new char[length];
+            var randomBytes = new byte[length];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            int quarterLength = length / 4;
+
+            // Fill exactly 1/4 with uppercase
+            for (int i = 0; i < quarterLength; i++)
+            {
+                chars[i] = uppercase[randomBytes[i] % uppercase.Length];
+            }
+
+            // Fill exactly 1/4 with numbers
+            for (int i = 0; i < quarterLength; i++)
+            {
+                chars[2 * quarterLength + i] = numbers[randomBytes[2 * quarterLength + i] % numbers.Length];
+            }
+
+            // Fill exactly 1/4 with lowercase
+            for (int i = 0; i < quarterLength; i++)
+            {
+                chars[quarterLength + i] = lowercase[randomBytes[quarterLength + i] % lowercase.Length];
+            }
+
+            // Fill exactly 1/4 with special characters
+            for (int i = 0; i < quarterLength; i++)
+            {
+                chars[3 * quarterLength + i] = special[randomBytes[3 * quarterLength + i] % special.Length];
+            }
+
+            // Shuffle the entire password to mix the characters
+            return new string(chars.OrderBy(x => randomBytes[new Random().Next(randomBytes.Length)]).ToArray());
+        }
+
+
+
+        private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
+        {
+            string currentPassword = SecureStorage.GetPassword();
+            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/encrypted_pwd_database.db";
+
+            if (oldPasswordTxtBox.Text != currentPassword)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    
+                    .AddText("Current password is incorrect!")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length == 0)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    
+                    .AddText("Please enter a new password!")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text != RepeatNewPasswordTxtBox.Text)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                  
+                    .AddText("New passwords do not match!")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length < 8)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    
+                    .AddText("New password must be at least 8 characters long!")
+                    .Show();
+                return;
+            }
+            SecureStorage.ChangeDatabasePassword(databaseFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
+            SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
+            string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+            Uri successUri = new Uri($"file:///{successIcon}");
+            new ToastContentBuilder()
+                .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+               
+                .AddText("Password changed successfully! Cipher Shield will be restarted.")
+                .Show();
+            Application.Restart();
+        }
+
         #region Password Generator Tab
 
 
@@ -112,11 +244,11 @@ namespace CipherShield
         {
             PasswordGeneratorGeneratedPwdTextBox.Clear();
             int count = (int)PasswordGeneratorCountNumeric.Value;
-            int length = (int)PasswordGeneratorLengthNumeric.Value;
+            int Length = (int)PasswordGeneratorLengthNumeric.Value;
 
             for (int i = 0; i < count; i++)
             {
-                string password = GeneratePassword(length);
+                string password = GeneratePassword(Length);
                 PasswordGeneratorGeneratedPwdTextBox.AppendText($"Password {i + 1}: {password}\r\n");
             }
 
@@ -136,11 +268,22 @@ namespace CipherShield
                 PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
                 PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
-                MessageBox.Show("Passwords Copied!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Passwords Copied!")
+                    .Show();
+
             }
             else
             {
-                MessageBox.Show("There is no passwords to copy!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("There is no passwords to copy!")
+                    .Show();
             }
         }
 
@@ -154,16 +297,17 @@ namespace CipherShield
                 using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                 {
                     sw.Write(PasswordGeneratorGeneratedPwdTextBox.Text);
-                    MessageBox.Show("Passwords successfully exported to TXT file!", "CypherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                    Uri successUri = new Uri($"file:///{successIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Passwords successfully exported to TXT file!")
+                        .Show();
                     PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
                     PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
                 }
-            }
-            else
-            {
-                MessageBox.Show("There is no passwords to export!", "CypherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }           
 
         }
 
@@ -182,7 +326,12 @@ namespace CipherShield
         {
             if (string.IsNullOrEmpty(websiteTxtBox.Text) || string.IsNullOrEmpty(usernameTxtBox.Text) || string.IsNullOrEmpty(passwordTxtBox.Text))
             {
-                MessageBox.Show("Please fill in all fields.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please fill in all fields.")
+                    .Show();
                 return;
             }
             else
@@ -196,7 +345,12 @@ namespace CipherShield
                 db.AddEntry(entry);
                 LoadData();
                 ClearInputFields();
-                MessageBox.Show("Entry added successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Entry added successfully!")
+                    .Show();
             }
 
         }
@@ -214,13 +368,25 @@ namespace CipherShield
                     entry.Username = usernameTxtBox.Text;
                     entry.Password = passwordTxtBox.Text;
                     db.UpdateEntry(entry);
-                    MessageBox.Show("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}");
-
+                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                    Uri successUri = new Uri($"file:///{successIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}")
+                        .Show();
                     LoadData();
                     ClearInputFields();
                 }
             }
-            else MessageBox.Show("Please select an entry to edit.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else 
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select an entry to edit.")
+                    .Show();
+            }
         }
 
         private void deleteButton_Click_1(object sender, EventArgs e)
@@ -231,8 +397,22 @@ namespace CipherShield
                 db.DeleteEntry(id);
                 LoadData();
                 ClearInputFields();
+                string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+                Uri infoUri = new Uri($"file:///{infoIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Entry deleted!")
+                    .Show();
             }
-            else MessageBox.Show("Please select an entry to delete.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else 
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select an entry to delete.")
+                    .Show();
+            }
         }
 
         private void ClearBtn_Click(object sender, EventArgs e)
@@ -253,6 +433,138 @@ namespace CipherShield
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
         }
 
+        private void PasswordManagerPrintBtn_Click(object sender, EventArgs e)
+        {
+            if (PasswordManagerDGV.Rows.Count == 0)
+            {
+                MessageBox.Show("No data to print.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += PrintDocument_PrintPage;
+
+            PrintDialog printDialog = new PrintDialog { Document = printDocument };
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog { Document = printDocument };
+                printPreviewDialog.ShowDialog();
+            }
+        }
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            int y = ev.MarginBounds.Top;
+            int x = ev.MarginBounds.Left;
+            int columnWidth = 200; // Adjust as needed
+            int rowHeight = 30; // Adjust as needed
+
+            // Set up colors
+            Brush headerBrush = new SolidBrush(SystemColors.Highlight);
+            Pen linePen = new Pen(Color.MidnightBlue);
+            Brush textBrush = Brushes.Black;
+            Brush headerFontBrush = Brushes.White;
+
+            // Set fonts
+            Font printFont = new Font("Verdana", 10);
+            Font headerFont = new Font("Verdana", 10, FontStyle.Bold);
+
+            // Print headers
+            foreach (DataGridViewColumn column in PasswordManagerDGV.Columns)
+            {
+                if (column.Visible)
+                {
+                    // Draw header background
+                    ev.Graphics.FillRectangle(headerBrush, x, y, columnWidth, rowHeight);
+                    // Measure the width of the header text
+                    SizeF headerTextSize = ev.Graphics.MeasureString(column.HeaderText, headerFont);
+                    // Calculate the X position to center the text
+                    float textX = x + (columnWidth - headerTextSize.Width) / 2;
+                    // Draw header text
+                    ev.Graphics.DrawString(column.HeaderText, headerFont, headerFontBrush, textX, y + 5);
+                    // Draw header border
+                    ev.Graphics.DrawRectangle(linePen, x, y, columnWidth, rowHeight);
+                    x += columnWidth;
+                }
+            }
+
+            y += rowHeight;
+            x = ev.MarginBounds.Left;
+
+            // Print rows
+            foreach (DataGridViewRow row in PasswordManagerDGV.Rows)
+            {
+                x = ev.MarginBounds.Left;
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (PasswordManagerDGV.Columns[cell.ColumnIndex].Visible)
+                    {
+                        // Draw cell border
+                        ev.Graphics.DrawRectangle(linePen, x, y, columnWidth, rowHeight);
+                        // Draw cell text
+                        ev.Graphics.DrawString(cell.Value?.ToString(), printFont, textBrush, x + 5, y + 5);
+                        x += columnWidth;
+                    }
+                }
+                y += rowHeight;
+            }
+        }
+
+
+
+        private void PasswordManagerExportBtn_Click(object sender, EventArgs e)
+        {
+            if (PasswordManagerDGV.Rows.Count == 0)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No data to export.")
+                    .Show();
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "CSV files (*.csv)|*.csv";
+                sfd.Title = "Save an Export File";
+                sfd.ShowDialog();
+
+                if (!string.IsNullOrEmpty(sfd.FileName))
+                {
+                    ExportToCsv(sfd.FileName);
+                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                    Uri successUri = new Uri($"file:///{successIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Data exported successfully!")
+                        .Show();
+                }
+            }
+        }
+
+        private void ExportToCsv(string filePath)
+        {
+            var sb = new StringBuilder();
+
+            var headers = PasswordManagerDGV.Columns.Cast<DataGridViewColumn>()
+                            .Where(c => c.Visible)
+                            .Select(column => $"\"{column.HeaderText}\"");
+            sb.AppendLine(string.Join(",", headers));
+
+            foreach (DataGridViewRow row in PasswordManagerDGV.Rows)
+            {
+                var cells = row.Cells.Cast<DataGridViewCell>()
+                            .Where(c => PasswordManagerDGV.Columns[c.ColumnIndex].Visible)
+                            .Select(cell => $"\"{cell.Value?.ToString()}\"");
+                sb.AppendLine(string.Join(",", cells));
+            }
+
+            File.WriteAllText(filePath, sb.ToString());
+        }
+
         #endregion
 
         #region Files Encryptor Tab
@@ -261,7 +573,12 @@ namespace CipherShield
         {
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password to backup.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a password to backup.")
+                    .Show();
                 return;
             }
 
@@ -276,11 +593,21 @@ namespace CipherShield
                 {
                     byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
                     File.WriteAllBytes(sfd.FileName, encryptedPassword);
-                    MessageBox.Show("Password backup has been saved. Keep this file safe!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+                    Uri infoUri = new Uri($"file:///{infoIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Password backup has been saved. Keep this file safe!")
+                        .Show();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error saving password backup: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Error saving password backup: {ex.Message}")
+                        .Show();
                 }
             }
 
@@ -314,7 +641,6 @@ namespace CipherShield
             }
         }
 
-
         private void LoadBackupButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -331,16 +657,31 @@ namespace CipherShield
                     {
                         FilesEncryptionEnterPwdTxtBox.Text = decryptedPassword;
                     }
-                    MessageBox.Show("Password has been loaded from backup.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+                    Uri infoUri = new Uri($"file:///{infoIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Password has been loaded from backup.")
+                        .Show();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading password backup: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText($"Error loading password backup: {ex.Message}")
+                        .Show();
                 }
             }
             else
             {
-                MessageBox.Show("No file selected.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+                Uri infoUri = new Uri($"file:///{infoIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No file selected.")
+                    .Show();
             }
 
         }
@@ -389,13 +730,23 @@ namespace CipherShield
 
             if (selectedFiles1.Count == 0)
             {
-                MessageBox.Show("Please select files first.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select files first.")
+                    .Show();
                 return;
             }
 
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a password.")
+                    .Show();
                 return;
             }
 
@@ -417,16 +768,30 @@ namespace CipherShield
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                            Uri errorUri = new Uri($"file:///{errorIcon}");
+                            new ToastContentBuilder()
+                                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                                .AddText($"Error encrypting {Path.GetFileName(file)}: {ex.Message}")
+                                .Show();
                         }
                     });
                 });
-
-                MessageBox.Show("All files encrypted successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("All files encrypted successfully!")
+                    .Show();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during encryption: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText($"Error during encryption: {ex.Message}")
+                    .Show();
             }
             finally
             {
@@ -438,13 +803,23 @@ namespace CipherShield
         {
             if (selectedFiles1.Count == 0)
             {
-                MessageBox.Show("Please select files first.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select files first.")
+                    .Show();
                 return;
             }
 
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                MessageBox.Show("Please enter a password.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a password.")
+                    .Show();
                 return;
             }
 
@@ -466,16 +841,31 @@ namespace CipherShield
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                            Uri errorUri = new Uri($"file:///{errorIcon}");
+                            new ToastContentBuilder()
+                                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                                .AddText($"Error decrypting {Path.GetFileName(file)}: {ex.Message}")
+                                .Show();
                         }
                     });
                 });
 
-                MessageBox.Show("All files decrypted successfully!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("All files decrypted successfully!")
+                    .Show();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during decryption: {ex.Message}", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText($"Error during decryption: {ex.Message}")
+                    .Show();
             }
             finally
             {
@@ -656,13 +1046,23 @@ namespace CipherShield
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading files!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Error loading files!")
+                        .Show();
                 }
             }
             else
             {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No files selected!")
+                    .Show();
 
-                MessageBox.Show("No files selected!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -724,8 +1124,12 @@ namespace CipherShield
         {
             if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
             {
-                MessageBox.Show("Please enter a regex pattern.", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a regex pattern.")
+                    .Show();
                 return;
             }
 
@@ -760,8 +1164,12 @@ namespace CipherShield
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show($"Invalid regex pattern: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText($"Invalid regex pattern: {ex.Message}")
+                    .Show();
             }
         }
 
@@ -813,7 +1221,7 @@ namespace CipherShield
             {
                 selectedFiles2.Clear();
                 RegexFilesListView.Items.Clear();
-                System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+                OpenFileDialog ofd = new OpenFileDialog();
                 foreach (string filePath in ofd.FileNames)
                 {
                     var fileInfo = new FileInfo(filePath);
@@ -830,11 +1238,13 @@ namespace CipherShield
             {
                 message += $"\n\nErrors occurred with {errors.Count} files:\n" + string.Join("\n", errors);
             }
-
-            MessageBox.Show(message, "Rename Results",
-                MessageBoxButtons.OK, errors.Any() ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
-
-
+            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+            Uri errorUri = new Uri($"file:///{errorIcon}");
+            new ToastContentBuilder()
+                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                .AddText($"Rename Results: {errors.Any()}")
+                .Show();
+      
             RegexRenameFilesBtn.Enabled = false;
 
         }
@@ -864,103 +1274,11 @@ namespace CipherShield
 
 
 
-        private string GeneratePassword(int length = 16)
-        {
-            const string uppercase = "NZAYBXCWDVEUFTGSHRIJPKOLM";
-            const string lowercase = "mlokpjirhsgtfuevdwcxbyazn";
-            const string numbers = "73281564";
-            const string special = "!@)#}$%>&*(+=]{<?[";
+        
 
-            // Ensure length is divisible by 4
-            length = length - (length % 4);
-            if (length < 16) length = 16; // Minimum length of 16 to ensure 4 chars of each type
+        
 
-            var random = new Random();
-            var chars = new char[length];
-            int quarterLength = length / 4;
 
-            // Fill exactly 1/4 with lowercase
-            for (int i = 0; i < quarterLength; i++)
-            {
-                chars[i] = lowercase[random.Next(lowercase.Length)];
-            }
-
-            // Fill exactly 1/4 with numbers
-            for (int i = quarterLength * 2; i < quarterLength * 3; i++)
-            {
-                chars[i] = numbers[random.Next(numbers.Length)];
-            }
-
-            // Fill exactly 1/4 with uppercase
-            for (int i = quarterLength; i < quarterLength * 2; i++)
-            {
-                chars[i] = uppercase[random.Next(uppercase.Length)];
-            }
-
-            // Fill exactly 1/4 with special characters
-            for (int i = quarterLength * 3; i < length; i++)
-            {
-                chars[i] = special[random.Next(special.Length)];
-            }
-
-            // Shuffle the entire password
-            return new string(chars.OrderBy(x => random.Next()).ToArray());
-        }
-
-        private void MainFormCloseBtn_MouseDown(object sender, MouseEventArgs e)
-        {
-            BackColor = System.Drawing.Color.GhostWhite;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            homeCarousselLbl.Text = hints[counter];
-            counter = (counter + 1) % hints.Length;
-        }
-
-        private void CloseBtn_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void MinimizeBtn_Click(object sender, EventArgs e)
-        {
-            ActiveForm.WindowState = FormWindowState.Minimized;
-        }
-
-        private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
-        {
-            string currentPassword = SecureStorage.GetPassword();
-            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/encrypted_pwd_database.db";
-
-            if (oldPasswordTxtBox.Text != currentPassword)
-            {
-                MessageBox.Show("Current password is incorrect!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text.Length == 0)
-            {
-                MessageBox.Show("Please enter a new password!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text != RepeatNewPasswordTxtBox.Text)
-            {
-                MessageBox.Show("New passwords do not match!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text.Length < 8)
-            {
-                MessageBox.Show("New password must be at least 8 characters long!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            SecureStorage.ChangeDatabasePassword(databaseFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
-            SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
-            MessageBox.Show("Password changed successfully! Application will be restarted.", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Application.Restart();
-        }
     }
 }
 

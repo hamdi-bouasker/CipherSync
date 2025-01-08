@@ -23,8 +23,8 @@ namespace CipherShield
         private void SubmitLoginPwdBtn_Click(object sender, EventArgs e)
         {
             Password = LoginMasterPwdTxtBox.Text;
-            string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
-            Uri iconUri = new Uri($"file:///{iconPath}");
+            string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+            Uri iconUri = new Uri($"file:///{infoIcon}");
 
             if (Password == SecureStorage.GetPassword())
             {
