@@ -8,27 +8,39 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <UseWPF>True</UseWPF>
     <StartupObject>CipherShield.Program</StartupObject>
-    <ApplicationIcon>Icons\securityLockICO.ico</ApplicationIcon>
-    <PackageIcon>securityLockPNG.png</PackageIcon>
+    <ApplicationIcon>Icons\lockICO.ico</ApplicationIcon>
+    <PackageIcon>lockPNG.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Icons\close.png" />
     <None Remove="Icons\error.png" />
     <None Remove="Icons\icons8-close-17.png" />
     <None Remove="Icons\info.png" />
+    <None Remove="Icons\lockICO.ico" />
+    <None Remove="Icons\minimize.png" />
+    <None Remove="Icons\securityLock.ico" />
     <None Remove="Icons\success.png" />
     <None Remove="Icons\warning.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icons\error.png">
+    <Content Include="Icons\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\icons8-close-17.png">
+    <Content Include="Icons\error.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\info.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Icons\securityLockICO.ico" />
+    <Content Include="Icons\lockICO.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\lockPNG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\success.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -54,6 +66,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Icons\lockPNG.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Icons\securityLock.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Icons\securityLockPNG.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

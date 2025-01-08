@@ -20,57 +20,39 @@ namespace CipherShield
             InitializeComponent();
         }
 
+        // Submit the master password for login
         private void SubmitLoginPwdBtn_Click(object sender, EventArgs e)
         {
             Password = LoginMasterPwdTxtBox.Text;
             string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
-            Uri iconUri = new Uri($"file:///{infoIcon}");
+            Uri infoUri = new Uri($"file:///{infoIcon}");
 
             if (Password == SecureStorage.GetPassword())
             {
                 // Display a toast notification for successful login
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(iconUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Cipher Shield")
+                    .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login successful!")
                     .AddText("Welcome back to Cipher Shield!")
                     .Show();
-
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
             else
             {
                 // Display a toast notification for failed login
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
-                     .AddAppLogoOverride(iconUri, ToastGenericAppLogoCrop.Default)
-                     .AddText("Cipher Shield")
+                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login failed!")
                     .AddText("Check your password or load the backup file: Master-Password.dat.")
                     .Show();
-
                 return;
             }
         }
 
-
-        //private void SubmitLoginPwdBtn_Click(object sender, EventArgs e)
-        //{
-        //    Password = LoginMasterPwdTxtBox.Text;
-        //    if (Password == SecureStorage.GetPassword())
-        //    {
-
-        //        MessageBox.Show("Login successful!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        this.DialogResult = DialogResult.OK;
-        //        Close();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Login failed! Check your password or load the backup file: Master-Password.dat!", "CipherSync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return;
-        //    }
-        //}
-
+        // Cancel the login process
         private void CancelLoginMasterPwdBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
@@ -83,16 +65,28 @@ namespace CipherShield
             {
                 var password = SecureStorage.GetPassword();
                 LoginMasterPwdTxtBox.Text = password;
-                MessageBox.Show("Backup file loaded successfully!", "Cipher Shield", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            catch 
+            catch
             {
-                MessageBox.Show("No backup file found!", "Cipher Shield", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No backup file found!")
+                    .Show();
                 return;
             }
+        }
 
-            
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

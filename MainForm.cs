@@ -14,8 +14,6 @@ using System.Drawing;
 using System.Drawing.Printing;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Text;
-using System.Security.Policy;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 
@@ -29,10 +27,12 @@ namespace CipherShield
         private DatabaseHelper db;
         private int counter = 0;
         string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice.", "A stitch in time saves nine." };
-        
+
         public MainForm()
         {
             InitializeComponent();
+            this.MakeDraggable(); // Make the form draggable
+            this.menuBarLbl.MakeDraggable(this); // Make the form draggable
             timer1.Start();
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
@@ -41,6 +41,8 @@ namespace CipherShield
             // Attach the Load event handler
             this.Load += new EventHandler(this.MainForm_Load);
         }
+
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
@@ -68,7 +70,7 @@ namespace CipherShield
                 loginForm.ShowDialog();
                 if (loginForm.DialogResult == DialogResult.OK)
                 {
-                    string password = loginForm.LoginMasterPwdTxtBox.Text; // Ensure you have a public Password property
+                    string password = loginForm.LoginMasterPwdTxtBox.Text;
                     db = new DatabaseHelper(password); // Pass the password to DatabaseHelper constructor
                     SetControlsEnabled(true);
                     LoadData();
@@ -172,7 +174,7 @@ namespace CipherShield
         }
 
 
-
+        // change master password
         private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
         {
             string currentPassword = SecureStorage.GetPassword();
@@ -184,7 +186,6 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    
                     .AddText("Current password is incorrect!")
                     .Show();
                 return;
@@ -196,7 +197,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    
+
                     .AddText("Please enter a new password!")
                     .Show();
                 return;
@@ -208,7 +209,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                  
+
                     .AddText("New passwords do not match!")
                     .Show();
                 return;
@@ -220,7 +221,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    
+
                     .AddText("New password must be at least 8 characters long!")
                     .Show();
                 return;
@@ -231,7 +232,7 @@ namespace CipherShield
             Uri successUri = new Uri($"file:///{successIcon}");
             new ToastContentBuilder()
                 .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-               
+
                 .AddText("Password changed successfully! Cipher Shield will be restarted.")
                 .Show();
             Application.Restart();
@@ -239,7 +240,7 @@ namespace CipherShield
 
         #region Password Generator Tab
 
-
+        // generate passwords
         private void GenerateButton_Click(object sender, EventArgs e)
         {
             PasswordGeneratorGeneratedPwdTextBox.Clear();
@@ -259,7 +260,7 @@ namespace CipherShield
             PasswordGeneratorClearPwdGenBtn.Enabled = hasPasswords;
         }
 
-
+        // copy passwords
         private void copyPwdBtn_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text))
@@ -287,6 +288,7 @@ namespace CipherShield
             }
         }
 
+        // export passwords
         private void exportPwdBtn_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -307,10 +309,11 @@ namespace CipherShield
                     PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
                 }
-            }           
+            }
 
         }
 
+        // clear inputs
         private void clearPwdGenBtn_Click(object sender, EventArgs e)
         {
             PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
@@ -322,6 +325,7 @@ namespace CipherShield
 
         #region Password Manager Tab
 
+        // add entry
         private void addButton_Click_1(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(websiteTxtBox.Text) || string.IsNullOrEmpty(usernameTxtBox.Text) || string.IsNullOrEmpty(passwordTxtBox.Text))
@@ -355,6 +359,7 @@ namespace CipherShield
 
         }
 
+        // select entry and edit/update it
         private void editButton_Click_1(object sender, EventArgs e)
         {
             if (PasswordManagerDGV.CurrentRow != null)
@@ -378,7 +383,7 @@ namespace CipherShield
                     ClearInputFields();
                 }
             }
-            else 
+            else
             {
                 string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
                 Uri errorUri = new Uri($"file:///{errorIcon}");
@@ -389,6 +394,7 @@ namespace CipherShield
             }
         }
 
+        // delete entry
         private void deleteButton_Click_1(object sender, EventArgs e)
         {
             if (PasswordManagerDGV.CurrentRow != null)
@@ -404,7 +410,7 @@ namespace CipherShield
                     .AddText("Entry deleted!")
                     .Show();
             }
-            else 
+            else
             {
                 string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
                 Uri errorUri = new Uri($"file:///{errorIcon}");
@@ -415,11 +421,13 @@ namespace CipherShield
             }
         }
 
+        // clear inputs
         private void ClearBtn_Click(object sender, EventArgs e)
         {
             ClearInputFields();
         }
 
+        // clear inputs
         private void ClearInputFields()
         {
             websiteTxtBox.Clear();
@@ -428,6 +436,7 @@ namespace CipherShield
             LoadData();
         }
 
+        // visualize an entry
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             PasswordManagerDGV.SelectionChanged += DataGridView1_SelectionChanged;
@@ -437,7 +446,12 @@ namespace CipherShield
         {
             if (PasswordManagerDGV.Rows.Count == 0)
             {
-                MessageBox.Show("No data to print.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No data to print/")
+                    .Show();
                 return;
             }
 
@@ -453,6 +467,7 @@ namespace CipherShield
             }
         }
 
+        // print all credentials
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs ev)
         {
             int y = ev.MarginBounds.Top;
@@ -512,7 +527,7 @@ namespace CipherShield
         }
 
 
-
+        // export all credentials to csv
         private void PasswordManagerExportBtn_Click(object sender, EventArgs e)
         {
             if (PasswordManagerDGV.Rows.Count == 0)
@@ -545,6 +560,7 @@ namespace CipherShield
             }
         }
 
+        // method to export as csv
         private void ExportToCsv(string filePath)
         {
             var sb = new StringBuilder();
@@ -569,6 +585,7 @@ namespace CipherShield
 
         #region Files Encryptor Tab
 
+        // backup the files encryption password to a file then encrypt it
         private void BackupPasswordButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
@@ -606,13 +623,14 @@ namespace CipherShield
                     Uri errorUri = new Uri($"file:///{errorIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("Error saving password backup: {ex.Message}")
+                        .AddText($"Error saving password backup: {ex.Message}")
                         .Show();
                 }
             }
 
         }
 
+        // browse files to encrypt
         private void BrowseFiles_Click(object sender, EventArgs e)
         {
             FileEncryptionFilesNumberTxtBox.Clear();
@@ -641,6 +659,7 @@ namespace CipherShield
             }
         }
 
+        // load encryption password from backup file
         private void LoadBackupButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -686,6 +705,7 @@ namespace CipherShield
 
         }
 
+        // method to encrypt the password
         private byte[] EncryptPassword(string password)
         {
             Aes aes = Aes.Create();
@@ -706,6 +726,7 @@ namespace CipherShield
             return msEncrypt.ToArray();
         }
 
+        // method to decrypt the password
         private string DecryptPassword(byte[] encryptedData)
         {
             Aes aes = Aes.Create();
@@ -724,7 +745,7 @@ namespace CipherShield
             return srDecrypt.ReadToEnd();
         }
 
-
+        // method to encrypt the selected files
         private async void EncryptButton_Click_1(object sender, EventArgs e)
         {
 
@@ -734,7 +755,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select files first.")
+                    .AddText("Please select the files first.")
                     .Show();
                 return;
             }
@@ -799,6 +820,7 @@ namespace CipherShield
             }
         }
 
+        // method to decrypt the selected files
         private async void DecryptButton_Click_1(object sender, EventArgs e)
         {
             if (selectedFiles1.Count == 0)
@@ -807,7 +829,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select files first.")
+                    .AddText("Please select the files first.")
                     .Show();
                 return;
             }
@@ -893,6 +915,7 @@ namespace CipherShield
                 FilesEncryptionEnterPwdTxtBox.Enabled = true;
         }
 
+        // asyncronous method to encrypt multiple files in parallel
         private async Task ProcessFileInPlace(string filePath, string password, bool encrypt)
         {
             string tempFile = Path.GetTempFileName();
@@ -978,6 +1001,8 @@ namespace CipherShield
                 }
             }
         }
+
+        // clear inputs
         private void clear_Click(object sender, EventArgs e)
         {
             FileEncryptionFilesNumberTxtBox.Clear();
@@ -986,6 +1011,8 @@ namespace CipherShield
             selectedFiles1.Clear();
             progressBar.Visible = false;
         }
+
+        // generate random salt for encryption key
         private byte[] GenerateRandomSalt()
         {
             byte[] salt = new byte[32];
@@ -995,6 +1022,8 @@ namespace CipherShield
             }
             return salt;
         }
+
+        // method to update progress bar 
         private void UpdateProgress(int value, int maximum)
         {
             if (progressBar.InvokeRequired)
@@ -1012,6 +1041,7 @@ namespace CipherShield
             }
         }
 
+        // generate random password
         private void GeneratePasswordButton_Click(object sender, EventArgs e)
         {
             FilesEncryptionEnterPwdTxtBox.Text = GeneratePassword();
@@ -1021,6 +1051,7 @@ namespace CipherShield
 
         #region Files Renamer Tab
 
+        // browse files to rename
         private void BrowseFilesBtnToRename_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -1066,6 +1097,78 @@ namespace CipherShield
             }
         }
 
+        // method to preview the renaming
+        private void previewBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a regex pattern.")
+                    .Show();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(RegexFilesListView.Text))
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select the files to rename.")
+                    .Show();
+                return;
+            }
+
+            try
+            {
+                RegexFilesListView.Items.Clear();
+                bool hasChanges = false;
+
+                // Initialize counter
+                int counter = 1;
+                if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
+                {
+                    counter = startNumber;
+                }
+
+                foreach (var file in selectedFiles2)
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+                    string newName = RegexUseIncrementCheckBox.Checked
+                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
+                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
+
+                    var item = new ListViewItem(new[] { fileInfo.Name, newName });
+                    RegexFilesListView.Items.Add(item);
+
+                    if (fileInfo.Name != newName)
+                        hasChanges = true;
+                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                    Uri successUri = new Uri($"file:///{successIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("The selected files are successfully renamed.")
+                        .Show();
+                }
+
+                RegexRenameFilesBtn.Enabled = hasChanges;
+
+            }
+            catch (ArgumentException ex)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText($"Invalid regex pattern: {ex.Message}")
+                    .Show();
+            }
+        }
+
+        // regex method
         private string GetNewFileName(FileInfo file, string pattern, string replacement, ref int counter)
         {
             string nameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);
@@ -1118,63 +1221,30 @@ namespace CipherShield
             return newName;
         }
 
-
-
-        private void previewBtn_Click(object sender, EventArgs e)
+        // method to rename the files
+        private void renameButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
+                string ErrorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri ErrorUri = new Uri($"file:///{ErrorIcon}");
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddAppLogoOverride(ErrorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Please enter a regex pattern.")
                     .Show();
                 return;
             }
 
-            try
+            if (string.IsNullOrWhiteSpace(RegexFilesListView.Text))
             {
-                RegexFilesListView.Items.Clear();
-                bool hasChanges = false;
-
-                // Initialize counter
-                int counter = 1;
-                if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
-                {
-                    counter = startNumber;
-                }
-
-                foreach (var file in selectedFiles2)
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-                    string newName = RegexUseIncrementCheckBox.Checked
-                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
-                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
-
-                    var item = new ListViewItem(new[] { fileInfo.Name, newName });
-                    RegexFilesListView.Items.Add(item);
-
-                    if (fileInfo.Name != newName)
-                        hasChanges = true;
-                }
-
-                RegexRenameFilesBtn.Enabled = hasChanges;
-
-            }
-            catch (ArgumentException ex)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
+                string ErrorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri ErrorUri = new Uri($"file:///{ErrorIcon}");
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText($"Invalid regex pattern: {ex.Message}")
+                    .AddAppLogoOverride(ErrorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select the files to rename.")
                     .Show();
+                return;
             }
-        }
-
-        private void renameButton_Click(object sender, EventArgs e)
-        {
             int successCount = 0;
             List<string> errors = new List<string>();
 
@@ -1244,11 +1314,12 @@ namespace CipherShield
                 .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                 .AddText($"Rename Results: {errors.Any()}")
                 .Show();
-      
+
             RegexRenameFilesBtn.Enabled = false;
 
         }
 
+        // clear inputs
         private void RegexClearBtn_Click(object sender, EventArgs e)
         {
             RegexPatternTxtBox.Clear();
@@ -1270,15 +1341,6 @@ namespace CipherShield
         }
 
         #endregion
-
-
-
-
-        
-
-        
-
-
     }
 }
 

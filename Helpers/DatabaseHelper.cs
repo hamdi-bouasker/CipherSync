@@ -1,8 +1,6 @@
 ﻿using CipherShield.Models;
 using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
 
 namespace CipherShield.Helpers
 {
@@ -10,20 +8,21 @@ namespace CipherShield.Helpers
     {
         private readonly string _connectionString;
 
+        // Initialize SQLitePCL to use SQLCipher
         static DatabaseHelper()
         {
             // Initialize SQLitePCL to use SQLCipher
             SQLitePCL.Batteries_V2.Init();
         }
 
+        // Constructor for the database helper
         public DatabaseHelper(string password)
         {
             _connectionString = $"Data Source=encrypted_pwd_database.db;Password={password}";
             InitializeDatabase();
         }
 
-
-
+        // Initialize the database
         private void InitializeDatabase()
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -42,6 +41,7 @@ namespace CipherShield.Helpers
             }
         }
 
+        // Get all entries from the database
         public IEnumerable<PasswordEntry> GetAllEntries()
         {
             var entries = new List<PasswordEntry>();
@@ -72,6 +72,7 @@ namespace CipherShield.Helpers
             return entries;
         }
 
+        // Add a new entry to the database
         public void AddEntry(PasswordEntry entry)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -90,6 +91,7 @@ namespace CipherShield.Helpers
             }
         }
 
+        // Update an existing entry in the database
         public void UpdateEntry(PasswordEntry entry)
         {
             using (var connection = new SqliteConnection(_connectionString))
@@ -110,6 +112,7 @@ namespace CipherShield.Helpers
             }
         }
 
+        // Delete an entry from the database
         public void DeleteEntry(int id)
         {
             using (var connection = new SqliteConnection(_connectionString))

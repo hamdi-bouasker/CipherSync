@@ -10,6 +10,7 @@ namespace CipherShield
 {
     public static class SecureStorage
     {
+        // Additional entropy for the password encryption
         private static readonly byte[] AdditionalEntropy = new byte[]
         {
         91, 182, 173, 64, 155, 246, 137, 228,
@@ -18,6 +19,7 @@ namespace CipherShield
         165, 176, 187, 198, 209, 220, 231, 242
         };
 
+        // Save the master password to a file
         public static void SavePassword(string password)
         {
             byte[] encryptedPassword = ProtectedData.Protect(
@@ -25,6 +27,7 @@ namespace CipherShield
             System.IO.File.WriteAllBytes("Master-Password.dat", encryptedPassword);
         }
 
+        // Retrieve the master password from the file
         public static string GetPassword()
         {
             byte[] encryptedPassword = System.IO.File.ReadAllBytes("Master-Password.dat");
@@ -33,11 +36,13 @@ namespace CipherShield
             return Encoding.UTF8.GetString(decryptedPassword);
         }
 
+        // Update the master password
         public static void UpdatePassword(string newPassword) 
         { 
             SavePassword(newPassword); 
         }
 
+        // change the master password file
         public static void ChangeDatabasePassword(string databaseFilePath, string oldPassword, string newPassword)
         {
             using (var connection = new SqliteConnection($"Data Source={databaseFilePath};Password={oldPassword};"))

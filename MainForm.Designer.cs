@@ -98,7 +98,7 @@
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            label12 = new System.Windows.Forms.Label();
+            menuBarLbl = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             CloseBtn = new System.Windows.Forms.Button();
             MinimizeBtn = new System.Windows.Forms.Button();
@@ -492,7 +492,7 @@
             // 
             // FilesEncryptionDecryptFilesBtn
             // 
-            FilesEncryptionDecryptFilesBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionDecryptFilesBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionDecryptFilesBtn.ForeColor = System.Drawing.SystemColors.Desktop;
             FilesEncryptionDecryptFilesBtn.Image = (System.Drawing.Image)resources.GetObject("FilesEncryptionDecryptFilesBtn.Image");
             FilesEncryptionDecryptFilesBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -506,7 +506,7 @@
             // 
             // FilesEncryptionEncryptBtn
             // 
-            FilesEncryptionEncryptBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionEncryptBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionEncryptBtn.ForeColor = System.Drawing.SystemColors.Desktop;
             FilesEncryptionEncryptBtn.Image = (System.Drawing.Image)resources.GetObject("FilesEncryptionEncryptBtn.Image");
             FilesEncryptionEncryptBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -522,7 +522,7 @@
             // 
             cFilesEncryptionCearBtn.BackColor = System.Drawing.Color.PowderBlue;
             cFilesEncryptionCearBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            cFilesEncryptionCearBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            cFilesEncryptionCearBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             cFilesEncryptionCearBtn.Location = new System.Drawing.Point(565, 438);
             cFilesEncryptionCearBtn.Name = "cFilesEncryptionCearBtn";
             cFilesEncryptionCearBtn.Size = new System.Drawing.Size(158, 33);
@@ -535,7 +535,7 @@
             // 
             FilesEncryptionLoadBackupBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionLoadBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            FilesEncryptionLoadBackupBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionLoadBackupBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionLoadBackupBtn.Location = new System.Drawing.Point(565, 277);
             FilesEncryptionLoadBackupBtn.Name = "FilesEncryptionLoadBackupBtn";
             FilesEncryptionLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
@@ -548,7 +548,7 @@
             // 
             FilesEncryptionBackupPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionBackupPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            FilesEncryptionBackupPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionBackupPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionBackupPwdBtn.Location = new System.Drawing.Point(565, 173);
             FilesEncryptionBackupPwdBtn.Name = "FilesEncryptionBackupPwdBtn";
             FilesEncryptionBackupPwdBtn.Size = new System.Drawing.Size(158, 33);
@@ -561,7 +561,7 @@
             // 
             FilesEncryptionGeneratePasswordBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionGeneratePasswordBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            FilesEncryptionGeneratePasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionGeneratePasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionGeneratePasswordBtn.Location = new System.Drawing.Point(565, 73);
             FilesEncryptionGeneratePasswordBtn.Name = "FilesEncryptionGeneratePasswordBtn";
             FilesEncryptionGeneratePasswordBtn.Size = new System.Drawing.Size(158, 33);
@@ -574,7 +574,7 @@
             // 
             FilesEncryptionBrowseFilesBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionBrowseFilesBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            FilesEncryptionBrowseFilesBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            FilesEncryptionBrowseFilesBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
             FilesEncryptionBrowseFilesBtn.Location = new System.Drawing.Point(565, 17);
             FilesEncryptionBrowseFilesBtn.Name = "FilesEncryptionBrowseFilesBtn";
             FilesEncryptionBrowseFilesBtn.Size = new System.Drawing.Size(158, 33);
@@ -789,17 +789,17 @@
             tabPage5.Controls.Add(oldPasswordTxtBox);
             tabPage5.Controls.Add(label11);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 27);
+            tabPage5.Location = new System.Drawing.Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 521);
+            tabPage5.Size = new System.Drawing.Size(752, 524);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
             // 
             // homeCarousselLbl
             // 
             homeCarousselLbl.BackColor = System.Drawing.Color.Transparent;
-            homeCarousselLbl.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            homeCarousselLbl.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             homeCarousselLbl.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             homeCarousselLbl.Location = new System.Drawing.Point(65, 449);
             homeCarousselLbl.Name = "homeCarousselLbl";
@@ -809,7 +809,7 @@
             // 
             // SubmitNewPasswordBtn
             // 
-            SubmitNewPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            SubmitNewPasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             SubmitNewPasswordBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             SubmitNewPasswordBtn.Location = new System.Drawing.Point(301, 346);
             SubmitNewPasswordBtn.Name = "SubmitNewPasswordBtn";
@@ -855,7 +855,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            label11.Font = new System.Drawing.Font("Comic Sans MS", 12F);
             label11.Location = new System.Drawing.Point(201, 61);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(345, 23);
@@ -882,14 +882,14 @@
             // 
             openFileDialog2.FileName = "openFileDialog2";
             // 
-            // label12
+            // menuBarLbl
             // 
-            label12.BackColor = System.Drawing.SystemColors.ControlLight;
-            label12.Dock = System.Windows.Forms.DockStyle.Top;
-            label12.Location = new System.Drawing.Point(0, 0);
-            label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(785, 27);
-            label12.TabIndex = 2;
+            menuBarLbl.BackColor = System.Drawing.SystemColors.ControlLight;
+            menuBarLbl.Dock = System.Windows.Forms.DockStyle.Top;
+            menuBarLbl.Location = new System.Drawing.Point(0, 0);
+            menuBarLbl.Name = "menuBarLbl";
+            menuBarLbl.Size = new System.Drawing.Size(785, 27);
+            menuBarLbl.TabIndex = 2;
             // 
             // label13
             // 
@@ -949,18 +949,21 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             ClientSize = new System.Drawing.Size(785, 620);
+            ControlBox = false;
             Controls.Add(MinimizeBtn);
             Controls.Add(CloseBtn);
             Controls.Add(label13);
-            Controls.Add(label12);
+            Controls.Add(menuBarLbl);
             Controls.Add(tabControl1);
-            Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            DoubleBuffered = true;
+            Font = new System.Drawing.Font("Comic Sans MS", 9.75F);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MainForm";
-            SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Cipher Shield";
             tabControl1.ResumeLayout(false);
@@ -1043,7 +1046,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button RegexClearBtn;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label menuBarLbl;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button CloseBtn;
         private System.Windows.Forms.Button MinimizeBtn;
