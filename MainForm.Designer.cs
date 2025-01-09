@@ -625,10 +625,10 @@
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
             tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage2.Location = new System.Drawing.Point(4, 24);
+            tabPage2.Location = new System.Drawing.Point(4, 27);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(752, 524);
+            tabPage2.Size = new System.Drawing.Size(752, 521);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Regex Files Renamer";
             // 

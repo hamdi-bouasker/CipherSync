@@ -48,7 +48,7 @@ namespace CipherShield
         {
             SetControlsEnabled(false); // Method to disable controls
 
-            if (!File.Exists("encrypted_pwd_database.db"))
+            if (!File.Exists("credentials.db"))
             {
                 RegisterMasterPasswordForm registerMasterPasswordForm = new RegisterMasterPasswordForm();
                 registerMasterPasswordForm.ShowDialog();
@@ -165,7 +165,7 @@ namespace CipherShield
         private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
         {
             string currentPassword = SecureStorage.GetPassword();
-            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/encrypted_pwd_database.db";
+            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/credentials.db";
 
             if (oldPasswordTxtBox.Text != currentPassword)
             {
@@ -1338,8 +1338,8 @@ namespace CipherShield
             RegexReplacementTxtBox.Clear();
             RegexFilesListView.Items.Clear();
             RegexUseIncrementCheckBox.Checked = false;
-            RegexStartFromNumeric.Value = 0;
-            RegexIncrementNumeric.Value = 0;
+            RegexStartFromNumeric.Value = 1;
+            RegexIncrementNumeric.Value = 1;
         }
 
         private void RegexHelpBtn_Click(object sender, EventArgs e)
