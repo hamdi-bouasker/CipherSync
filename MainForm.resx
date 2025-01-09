@@ -159,6 +159,43 @@
         b+/mf3LbXpt/5KOKkfQL/gO4YBY+TZKiDgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="textBox2.Text" xml:space="preserve">
+    <value>Files Encryption protect your files from unauthorized intruders.
+ It will make the files unreadable and inaccessible using AES-256
+algorithm.
+
+It is highly advisable to backup the password you use to encrypt the files
+with a simple click. Nevermind, the file which will store the password
+is also encrypted.</value>
+  </data>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>Securely save your credentials to the database.
+
+When you run the software for the first time,
+you are asked to register master password which will be used
+to protect the newly created database from unauthorized intruders.
+
+The credentials are encrypted with SQLCipher which uses AES-256
+encryption algorithm. It is a standard adopted by the U.S. government 
+and many organizations worldwide for encrypting sensitive data.
+
+The master password is registered in a file which is encrypted with 
+Data Protection API (DPAPI) AES-256 encryption algorithm.
+
+When you login, you can load the master password with a simple click
+and load it in the input tab to automate the login process.
+</value>
+  </data>
+  <data name="PasswordGeneratortxtBox.Text" xml:space="preserve">
+    <value>The generated passwords are composed of:
+
+• 1/4 of the password length: uppercase letters
+• 1/4 of the password length: lowercase letters
+• 1/4 of the password length: digits
+• 1/4 of the password length: special characters
+
+This is to ensure the generated passwords are heavily complex.</value>
+  </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>171, 17</value>
   </metadata>
@@ -171,7 +208,7 @@
   <data name="label13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAPBJREFUOE/VkLFKwlEYxX+NCUU5R49gFOKQ9gi2NVnvUD6PIAi+gbTm5BPoUDS1
+        DAAACwwBP0AiyAAAAPBJREFUOE/VkLFKwlEYxX+NCUU5R49gFOKQ9gi2NVnvUD6PIAi+gbTm5BPoUDS1
         uDXVIqhx4CqX0/cndQg88IPL951z7uXCvukKeAI6wBB4Bz6BWUJnzV6SR15lQl0Cc2C5JcpceJl0F5g3
         Rdlf+tfCUcLnOxU+Zp52sC8svA2M4ijzHAd70cw8a9UCo7jOPI1gL6qZZ60S8B2Yp0AlobPvv4BDL1up
         HwSE/qjoj3tekusmCIhWwucLoO4lLt3owY+Ez7sejlQGJkHYGQMnHi7SOfAWlKx4Bc489Jf00uegbACc
@@ -181,7 +218,7 @@
   <data name="CloseBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAAH1JREFUOE/Nks0KgDAMg/Oy4tGfi2+lb6gSWKHElVHcYR8MWRPSUgeMyg5g0qJA
+        DAAACwwBP0AiyAAAAH1JREFUOE/Nks0KgDAMg/Oy4tGfi2+lb6gSWKHElVHcYR8MWRPSUgeMyg5g0qJA
         nb4qFB4AN4BFxQLr1OmrBrGDGWpBPoDfcOLZGXmOUl8bDT5oxysbYOhE6QDjlBDeU/gd+GM7avJ7J9Ff
         0B2FE3V5J11eLNmiDg7q9A3IC+diTIZBqaDLAAAAAElFTkSuQmCC
 </value>
@@ -189,7 +226,7 @@
   <data name="MinimizeBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAADdJREFUOE9jYBgFIwSwMTAwtDAwMMwkATdD9cGBPQMDw38yMEgfHIBMBJmMbhs+
+        DAAACwwBP0AiyAAAADdJREFUOE9jYBgFIwSwMTAwtDAwMMwkATdD9cGBPQMDw38yMEgfHIBMBJmMbhs+
         3ITuklEwbAEAsHEcvMO81MwAAAAASUVORK5CYII=
 </value>
   </data>

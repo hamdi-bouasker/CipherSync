@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
 namespace CipherShield
@@ -42,7 +38,7 @@ namespace CipherShield
             SavePassword(newPassword); 
         }
 
-        // change the master password file
+        // change the master password
         public static void ChangeDatabasePassword(string databaseFilePath, string oldPassword, string newPassword)
         {
             using (var connection = new SqliteConnection($"Data Source={databaseFilePath};Password={oldPassword};"))

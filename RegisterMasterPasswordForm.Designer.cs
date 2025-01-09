@@ -82,18 +82,18 @@
             label1.AutoSize = true;
             label1.Location = new System.Drawing.Point(21, 58);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(155, 18);
+            label1.Size = new System.Drawing.Size(169, 18);
             label1.TabIndex = 11;
-            label1.Text = "Register Lock Password:";
+            label1.Text = "Register Master Password:";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(23, 109);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(153, 18);
+            label2.Size = new System.Drawing.Size(167, 18);
             label2.TabIndex = 13;
-            label2.Text = "Confirm Lock Password:";
+            label2.Text = "Confirm Master Password:";
             // 
             // RegisterMasterPwdConfirmTxtBox
             // 

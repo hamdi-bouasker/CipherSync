@@ -11,6 +11,7 @@ namespace CipherShield
         private static Point dragCursorPoint;
         private static Point dragFormPoint;
 
+        // Make a control draggable
         public static void MakeDraggable(this Control control, Form form)
         {
             control.MouseDown += (s, e) =>

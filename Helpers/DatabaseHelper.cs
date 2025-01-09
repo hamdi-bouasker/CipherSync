@@ -8,7 +8,7 @@ namespace CipherShield.Helpers
     {
         private readonly string _connectionString;
 
-        // Initialize SQLitePCL to use SQLCipher
+        
         static DatabaseHelper()
         {
             // Initialize SQLitePCL to use SQLCipher
@@ -18,7 +18,7 @@ namespace CipherShield.Helpers
         // Constructor for the database helper
         public DatabaseHelper(string password)
         {
-            _connectionString = $"Data Source=encrypted_pwd_database.db;Password={password}";
+            _connectionString = $"Data Source=credentials.db;Password={password}";
             InitializeDatabase();
         }
 

@@ -95,6 +95,16 @@
             oldPasswordTxtBox = new System.Windows.Forms.TextBox();
             label11 = new System.Windows.Forms.Label();
             tabPage6 = new System.Windows.Forms.TabPage();
+            panel1 = new System.Windows.Forms.Panel();
+            label17 = new System.Windows.Forms.Label();
+            label16 = new System.Windows.Forms.Label();
+            textBox3 = new System.Windows.Forms.TextBox();
+            textBox2 = new System.Windows.Forms.TextBox();
+            label15 = new System.Windows.Forms.Label();
+            textBox1 = new System.Windows.Forms.TextBox();
+            label14 = new System.Windows.Forms.Label();
+            PasswordGeneratortxtBox = new System.Windows.Forms.TextBox();
+            label12 = new System.Windows.Forms.Label();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
@@ -116,6 +126,8 @@
             ((System.ComponentModel.ISupportInitialize)RegexIncrementNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).BeginInit();
             tabPage5.SuspendLayout();
+            tabPage6.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -523,7 +535,7 @@
             cFilesEncryptionCearBtn.BackColor = System.Drawing.Color.PowderBlue;
             cFilesEncryptionCearBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             cFilesEncryptionCearBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            cFilesEncryptionCearBtn.Location = new System.Drawing.Point(565, 438);
+            cFilesEncryptionCearBtn.Location = new System.Drawing.Point(565, 379);
             cFilesEncryptionCearBtn.Name = "cFilesEncryptionCearBtn";
             cFilesEncryptionCearBtn.Size = new System.Drawing.Size(158, 33);
             cFilesEncryptionCearBtn.TabIndex = 6;
@@ -536,7 +548,7 @@
             FilesEncryptionLoadBackupBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionLoadBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionLoadBackupBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionLoadBackupBtn.Location = new System.Drawing.Point(565, 277);
+            FilesEncryptionLoadBackupBtn.Location = new System.Drawing.Point(565, 258);
             FilesEncryptionLoadBackupBtn.Name = "FilesEncryptionLoadBackupBtn";
             FilesEncryptionLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionLoadBackupBtn.TabIndex = 5;
@@ -549,7 +561,7 @@
             FilesEncryptionBackupPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionBackupPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionBackupPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionBackupPwdBtn.Location = new System.Drawing.Point(565, 173);
+            FilesEncryptionBackupPwdBtn.Location = new System.Drawing.Point(565, 162);
             FilesEncryptionBackupPwdBtn.Name = "FilesEncryptionBackupPwdBtn";
             FilesEncryptionBackupPwdBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionBackupPwdBtn.TabIndex = 4;
@@ -719,16 +731,20 @@
             // RegexIncrementNumeric
             // 
             RegexIncrementNumeric.Location = new System.Drawing.Point(472, 148);
+            RegexIncrementNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             RegexIncrementNumeric.Name = "RegexIncrementNumeric";
             RegexIncrementNumeric.Size = new System.Drawing.Size(67, 26);
             RegexIncrementNumeric.TabIndex = 7;
+            RegexIncrementNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // RegexStartFromNumeric
             // 
             RegexStartFromNumeric.Location = new System.Drawing.Point(257, 148);
+            RegexStartFromNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             RegexStartFromNumeric.Name = "RegexStartFromNumeric";
             RegexStartFromNumeric.Size = new System.Drawing.Size(67, 26);
             RegexStartFromNumeric.TabIndex = 6;
+            RegexStartFromNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // RegexUseIncrementCheckBox
             // 
@@ -864,14 +880,146 @@
             // 
             // tabPage6
             // 
+            tabPage6.AutoScroll = true;
+            tabPage6.AutoScrollMargin = new System.Drawing.Size(5, 5);
+            tabPage6.AutoScrollMinSize = new System.Drawing.Size(5, 5);
             tabPage6.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            tabPage6.Controls.Add(panel1);
             tabPage6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage6.Location = new System.Drawing.Point(4, 24);
+            tabPage6.Location = new System.Drawing.Point(4, 27);
             tabPage6.Name = "tabPage6";
             tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            tabPage6.Size = new System.Drawing.Size(752, 524);
+            tabPage6.Size = new System.Drawing.Size(752, 521);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "About";
+            // 
+            // panel1
+            // 
+            panel1.AutoScroll = true;
+            panel1.AutoScrollMargin = new System.Drawing.Size(5, 5);
+            panel1.AutoScrollMinSize = new System.Drawing.Size(5, 5);
+            panel1.Controls.Add(label17);
+            panel1.Controls.Add(label16);
+            panel1.Controls.Add(textBox3);
+            panel1.Controls.Add(textBox2);
+            panel1.Controls.Add(label15);
+            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(label14);
+            panel1.Controls.Add(PasswordGeneratortxtBox);
+            panel1.Controls.Add(label12);
+            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel1.Location = new System.Drawing.Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(746, 515);
+            panel1.TabIndex = 0;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            label17.ForeColor = System.Drawing.Color.DodgerBlue;
+            label17.Location = new System.Drawing.Point(209, 24);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(301, 38);
+            label17.TabIndex = 12;
+            label17.Text = "Cipher Sync ®\r\n© 2025 CompanyName.  All rights reserved. ";
+            label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
+            label16.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            label16.Location = new System.Drawing.Point(46, 928);
+            label16.Name = "label16";
+            label16.Size = new System.Drawing.Size(166, 22);
+            label16.TabIndex = 11;
+            label16.Text = "REGEX Files Renamer";
+            // 
+            // textBox3
+            // 
+            textBox3.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            textBox3.Location = new System.Drawing.Point(46, 986);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
+            textBox3.Size = new System.Drawing.Size(633, 89);
+            textBox3.TabIndex = 10;
+            textBox3.Text = "Rename your files using REGEX pattern.\r\n\r\nYou can also combine REGEX pattern with counter to\r\nincrementally add number to your files names. ";
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            textBox2.Location = new System.Drawing.Point(46, 767);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new System.Drawing.Size(633, 136);
+            textBox2.TabIndex = 9;
+            textBox2.Text = resources.GetString("textBox2.Text");
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
+            label15.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            label15.Location = new System.Drawing.Point(46, 719);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(124, 22);
+            label15.TabIndex = 8;
+            label15.Text = "Files Encryption";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            textBox1.Location = new System.Drawing.Point(46, 386);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new System.Drawing.Size(633, 317);
+            textBox1.TabIndex = 7;
+            textBox1.Text = resources.GetString("textBox1.Text");
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
+            label14.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            label14.Location = new System.Drawing.Point(45, 337);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(148, 22);
+            label14.TabIndex = 6;
+            label14.Text = "Passwords Manager";
+            // 
+            // PasswordGeneratortxtBox
+            // 
+            PasswordGeneratortxtBox.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
+            PasswordGeneratortxtBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            PasswordGeneratortxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            PasswordGeneratortxtBox.Location = new System.Drawing.Point(46, 151);
+            PasswordGeneratortxtBox.Multiline = true;
+            PasswordGeneratortxtBox.Name = "PasswordGeneratortxtBox";
+            PasswordGeneratortxtBox.ReadOnly = true;
+            PasswordGeneratortxtBox.Size = new System.Drawing.Size(633, 152);
+            PasswordGeneratortxtBox.TabIndex = 5;
+            PasswordGeneratortxtBox.Text = resources.GetString("PasswordGeneratortxtBox.Text");
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
+            label12.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            label12.Location = new System.Drawing.Point(45, 99);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(152, 22);
+            label12.TabIndex = 4;
+            label12.Text = "Password Generator";
             // 
             // openFileDialog1
             // 
@@ -983,6 +1131,9 @@
             ((System.ComponentModel.ISupportInitialize)RegexStartFromNumeric).EndInit();
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
+            tabPage6.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1061,6 +1212,16 @@
         private System.Windows.Forms.Button PasswordManagerExportBtn;
         private System.Windows.Forms.Button PasswordManagerPrintBtn;
         private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox PasswordGeneratortxtBox;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label17;
     }
 }
 

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Toolkit.Uwp.Notifications;
@@ -32,8 +25,8 @@ namespace CipherShield
                 // Display a toast notification for successful login
                 new ToastContentBuilder()
                     .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Login successful!")
-                    .AddText("Welcome back to Cipher Shield!")
+                    .AddText("Login successful")
+                    .AddText("Welcome back to Cipher Shield")
                     .Show();
                 this.DialogResult = DialogResult.OK;
                 Close();
@@ -46,7 +39,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                      .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login failed!")
-                    .AddText("Check your password or load the backup file: Master-Password.dat.")
+                    .AddText("Check your password or click on Load Master Password")
                     .Show();
                 return;
             }
@@ -59,6 +52,7 @@ namespace CipherShield
             Close();
         }
 
+        // Load the master password from the backup file
         private void LoginPwdLoadBackupBtn_Click(object sender, EventArgs e)
         {
             try
@@ -78,12 +72,6 @@ namespace CipherShield
                 return;
             }
         }
-
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void CloseBtn_Click(object sender, EventArgs e)
         {
             Close();

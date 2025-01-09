@@ -94,7 +94,7 @@
             LoginPwdLoadBackupBtn.Name = "LoginPwdLoadBackupBtn";
             LoginPwdLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
             LoginPwdLoadBackupBtn.TabIndex = 3;
-            LoginPwdLoadBackupBtn.Text = "Load Password";
+            LoginPwdLoadBackupBtn.Text = "Load Master Password";
             LoginPwdLoadBackupBtn.UseVisualStyleBackColor = false;
             LoginPwdLoadBackupBtn.Click += LoginPwdLoadBackupBtn_Click;
             // 
@@ -160,7 +160,6 @@
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Cipher Shield";
-            Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

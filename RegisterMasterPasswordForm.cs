@@ -59,7 +59,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
 
-                    .AddText("Master password registered successfully.")
+                    .AddText("The Master password has been successfully registered")
                     .Show();
                 this.DialogResult = DialogResult.OK; // Set DialogResult to OK
                 Close();
