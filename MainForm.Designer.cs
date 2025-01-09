@@ -625,10 +625,10 @@
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
             tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage2.Location = new System.Drawing.Point(4, 27);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(752, 521);
+            tabPage2.Size = new System.Drawing.Size(752, 524);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Regex Files Renamer";
             // 
@@ -945,9 +945,9 @@
             textBox3.Multiline = true;
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
-            textBox3.Size = new System.Drawing.Size(633, 89);
+            textBox3.Size = new System.Drawing.Size(633, 143);
             textBox3.TabIndex = 10;
-            textBox3.Text = "Rename your files using REGEX pattern.\r\n\r\nYou can also combine REGEX pattern with counter to\r\nincrementally add number to your files names. ";
+            textBox3.Text = resources.GetString("textBox3.Text");
             // 
             // textBox2
             // 

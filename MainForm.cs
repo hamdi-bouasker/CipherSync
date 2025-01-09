@@ -1093,7 +1093,7 @@ namespace CipherShield
                     Uri errorUri = new Uri($"file:///{errorIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("Error loading the files!")
+                        .AddText($"Error loading the files: {ex.Message}")
                         .Show();
                 }
             }
@@ -1106,77 +1106,6 @@ namespace CipherShield
                     .AddText("No files selected!")
                     .Show();
 
-            }
-        }
-
-        // method to preview the renaming
-        private void previewBtn_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a regex pattern!")
-                    .Show();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(RegexFilesListView.Text))
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select the files to rename!")
-                    .Show();
-                return;
-            }
-
-            try
-            {
-                RegexFilesListView.Items.Clear();
-                bool hasChanges = false;
-
-                // Initialize counter
-                int counter = 1;
-                if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
-                {
-                    counter = startNumber;
-                }
-
-                foreach (var file in selectedFiles2)
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-                    string newName = RegexUseIncrementCheckBox.Checked
-                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
-                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
-
-                    var item = new ListViewItem(new[] { fileInfo.Name, newName });
-                    RegexFilesListView.Items.Add(item);
-
-                    if (fileInfo.Name != newName)
-                        hasChanges = true;
-                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                    Uri successUri = new Uri($"file:///{successIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The selected files are successfully renamed.")
-                        .Show();
-                }
-
-                RegexRenameFilesBtn.Enabled = hasChanges;
-
-            }
-            catch (ArgumentException ex)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText($"Invalid regex pattern: {ex.Message}")
-                    .Show();
             }
         }
 
@@ -1233,6 +1162,78 @@ namespace CipherShield
             return newName;
         }
 
+        // method to preview the renaming
+        private void previewBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(RegexPatternTxtBox.Text))
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please enter a regex pattern!")
+                    .Show();
+                return;
+            }
+            
+            if (RegexFilesListView.Items.Count == 0)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Please select the files to rename!")
+                    .Show();
+                return;
+            }
+
+            try
+            {
+                RegexFilesListView.Items.Clear();
+                bool hasChanges = false;
+
+                // Initialize counter
+                int counter = 1;
+                if (RegexUseIncrementCheckBox.Checked && int.TryParse(RegexStartFromNumeric.Text, out int startNumber))
+                {
+                    counter = startNumber;
+                }
+
+                foreach (var file in selectedFiles2)
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+                    string newName = RegexUseIncrementCheckBox.Checked
+                        ? GetNewFileName(fileInfo, RegexPatternTxtBox.Text, RegexReplacementTxtBox.Text, ref counter)
+                        : new Regex(RegexPatternTxtBox.Text).Replace(fileInfo.Name, RegexReplacementTxtBox.Text);
+
+                    var item = new ListViewItem(new[] { fileInfo.Name, newName });
+                    RegexFilesListView.Items.Add(item);
+
+                    if (fileInfo.Name != newName)
+                        hasChanges = true;                   
+                }
+
+                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+                Uri successUri = new Uri($"file:///{successIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("New files names have been previewed")
+                    .Show();
+
+                RegexRenameFilesBtn.Enabled = hasChanges;
+
+            }
+            catch (ArgumentException ex)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText($"Invalid regex pattern: {ex.Message}")
+                    .Show();
+            }
+        }
+
         // method to rename the files
         private void renameButton_Click(object sender, EventArgs e)
         {
@@ -1247,7 +1248,7 @@ namespace CipherShield
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(RegexFilesListView.Text))
+            if (RegexFilesListView.Items.Count == 0)
             {
                 string ErrorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
                 Uri ErrorUri = new Uri($"file:///{ErrorIcon}");
@@ -1324,7 +1325,7 @@ namespace CipherShield
             Uri errorUri = new Uri($"file:///{errorIcon}");
             new ToastContentBuilder()
                 .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                .AddText($"Rename Results: {errors.Any()}")
+                .AddText($"Renaming Results: {errors.Any()}")
                 .Show();
 
             RegexRenameFilesBtn.Enabled = false;

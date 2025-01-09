@@ -159,6 +159,15 @@
         b+/mf3LbXpt/5KOKkfQL/gO4YBY+TZKiDgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="textBox3.Text" xml:space="preserve">
+    <value>Rename your files using REGEX pattern.
+
+You can also combine REGEX pattern with counter to
+incrementally add number to your files names. 
+
+When you want to add incremented digit just insert 
+the following symbol in the Replacement input tab: {n}</value>
+  </data>
   <data name="textBox2.Text" xml:space="preserve">
     <value>Files Encryption protect your files from unauthorized intruders.
  It will make the files unreadable and inaccessible using AES-256
