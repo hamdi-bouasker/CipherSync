@@ -805,10 +805,10 @@
             tabPage5.Controls.Add(oldPasswordTxtBox);
             tabPage5.Controls.Add(label11);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 24);
+            tabPage5.Location = new System.Drawing.Point(4, 27);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 524);
+            tabPage5.Size = new System.Drawing.Size(752, 521);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
             // 
@@ -845,6 +845,7 @@
             RepeatNewPasswordTxtBox.PlaceholderText = "             Repeat new password";
             RepeatNewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             RepeatNewPasswordTxtBox.TabIndex = 12;
+            RepeatNewPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // NewPasswordTxtBox
             // 
@@ -856,6 +857,7 @@
             NewPasswordTxtBox.PlaceholderText = "              Enter new password";
             NewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             NewPasswordTxtBox.TabIndex = 11;
+            NewPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // oldPasswordTxtBox
             // 
@@ -867,6 +869,7 @@
             oldPasswordTxtBox.PlaceholderText = "               Enter current Password";
             oldPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             oldPasswordTxtBox.TabIndex = 10;
+            oldPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label11
             // 
