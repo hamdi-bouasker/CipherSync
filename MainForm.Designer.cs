@@ -271,10 +271,10 @@
             tabPage4.Controls.Add(usernameTxtBox);
             tabPage4.Controls.Add(PasswordManagerDGV);
             tabPage4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage4.Location = new System.Drawing.Point(4, 27);
+            tabPage4.Location = new System.Drawing.Point(4, 24);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            tabPage4.Size = new System.Drawing.Size(752, 521);
+            tabPage4.Size = new System.Drawing.Size(752, 524);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Passwords Manager";
             // 
@@ -451,10 +451,10 @@
             tabPage1.Controls.Add(FilesEncryptionBrowseFilesBtn);
             tabPage1.Controls.Add(FileEncryptionFilesNumberTxtBox);
             tabPage1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage1.Location = new System.Drawing.Point(4, 27);
+            tabPage1.Location = new System.Drawing.Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(752, 521);
+            tabPage1.Size = new System.Drawing.Size(752, 524);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Files Encryption";
             // 
@@ -625,10 +625,10 @@
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
             tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage2.Location = new System.Drawing.Point(4, 27);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(752, 521);
+            tabPage2.Size = new System.Drawing.Size(752, 524);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Regex Files Renamer";
             // 
@@ -805,10 +805,10 @@
             tabPage5.Controls.Add(oldPasswordTxtBox);
             tabPage5.Controls.Add(label11);
             tabPage5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage5.Location = new System.Drawing.Point(4, 27);
+            tabPage5.Location = new System.Drawing.Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            tabPage5.Size = new System.Drawing.Size(752, 521);
+            tabPage5.Size = new System.Drawing.Size(752, 524);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Help";
             // 

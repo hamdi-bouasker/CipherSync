@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Text;
+using System.Runtime.InteropServices;
 
 
 
@@ -257,17 +258,31 @@ namespace CipherShield
         {
             if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text))
             {
-                Clipboard.SetText(PasswordGeneratorGeneratedPwdTextBox.Text);
-                PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
-                PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
+                try
+                {
+                    Clipboard.Clear(); // Clear the clipboard first
+                    Clipboard.SetDataObject(PasswordGeneratorGeneratedPwdTextBox.Text, true); // Use the copy retry option
 
-                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
-                Uri successUri = new Uri($"file:///{successIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Passwords Copied.")
-                    .Show();
+                    PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
+                    PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
+                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
+                    Uri successUri = new Uri($"file:///{successIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Passwords Copied")
+                        .Show();
+                }
+                catch (ExternalException ex)
+                {
+                    // Handle clipboard exception
+                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                    Uri errorUri = new Uri($"file:///{errorIcon}");
+                    new ToastContentBuilder()
+                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                        .AddText("Clipboard Operation Failed: " + ex.Message)
+                        .Show();
+                }
             }
             else
             {
@@ -275,10 +290,11 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("There is no passwords to copy!")
+                    .AddText("There Is No Passwords To Copy")
                     .Show();
             }
         }
+
 
         // export passwords
         private void exportPwdBtn_Click(object sender, EventArgs e)
