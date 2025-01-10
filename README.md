@@ -23,7 +23,7 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ![CipherShield1.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield1.png)
 
-- Generates complex passwords composed of:
+Generates complex passwords composed of:
 
 - Uppercase letters
 
@@ -37,11 +37,11 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ![CipherShield2.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield2.png)
 
-- Encrypts files using AES-256 encryption.
+- Encrypts any files (Word,Excel, PowerPoint, PDF, JPG ect.) using AES-256 encryption.
 
 - The password used for encryption is saved to an encrypted backup file.
 
-- You can load the encrypted password directly with a click.
+- You can load the encrypted password directly by clicking on **Load Backup Pasword**
 
 ### _Password Manager_
 
@@ -49,15 +49,16 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 - Inputs are saved to an encrypted database.
 
-- The database uses SQLCipher with AES-256 encryption.
-
+- The database is encrypted with SQLCipher with AES-256 algorithm.
+- All you credentials are saved locally in your computer, it's an offline app.
+  
 ### _REGEX Files Renamer_
 
 ![CipherShield4.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield4.png)
 
 - Easily rename your files using C# regex symbols.
 
-- Additionally, use a counter to rename your files incrementally by inserting in Replacement tab this symbol **{n}**
+- Additionally, you can use a counter to rename your files incrementally by inserting in **Replacement tab** this symbol **{n}**
 
 ## _Getting Started_
 
@@ -90,6 +91,6 @@ This project is licensed under the MIT License.
 
 ## _Hint_
 
-The Installer is made without a signing it using thrid-part authority such as comodo which requires $200 yearly.
+The Installer is made without signing it using thrid-part authority such as comodo which requires $200 yearly while currently I do not have commercial intention.
 When using the installer, you will be warned not to use it, this simply because the installer is not signed as explained, else it's 100% safe.
 Otherwise, just compile the code.
