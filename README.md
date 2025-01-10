@@ -1,67 +1,83 @@
-###Cipher Sync Project
+### _Cipher Sync Project_
 
-##Description
+## _Description_
 Cipher Sync protects your files and passwords from unauthorized intruders.
 
-##Features
+## _Features_
 
-#Master Password
-A Master Password is registered when you use the app for the first time.
+# _Master Password_
 
-The Master Password is automatically backed up in an encrypted file named Master-Password.dat.
+- A Master Password is registered when you use the app for the first time.
 
-The file is encrypted using the Data Protection API (DPAPI) with AES-256 encryption.
+- The Master Password is automatically backed up in an encrypted file named Master-Password.dat.
 
-You can log in by clicking on the button "Load Master Password".
+- The file is encrypted using the Data Protection API (DPAPI) with AES-256 encryption.
 
-#Password Generator
-Generates complex passwords composed of:
+- You can log in by clicking on the button **Load Master Password**.
 
-Uppercase letters
+# _Password Generator_
 
-Lowercase letters
+- Generates complex passwords composed of:
 
-Digits
+- Uppercase letters
 
-Special characters
+- Lowercase letters
 
-#Files Encryption
-Encrypts files using AES-256 encryption.
+- Digits
 
-The password used for encryption is saved to an encrypted backup file.
+- Special characters
 
-You can load the encrypted password directly with a click.
+# _Files Encryption_
 
-#Password Manager
-Inputs are saved to an encrypted database.
+- Encrypts files using AES-256 encryption.
 
-The database uses SQLCipher with AES-256 encryption.
+- The password used for encryption is saved to an encrypted backup file.
 
-#REGEX Files Renamer
-Easily rename your files using C# regex symbols.
+- You can load the encrypted password directly with a click.
 
-Additionally, use a counter to rename your files incrementally.
+# _Password Manager_
 
-###Getting Started
-##Prerequisites
+- Inputs are saved to an encrypted database.
+
+- The database uses SQLCipher with AES-256 encryption.
+
+# _REGEX Files Renamer_
+
+- Easily rename your files using C# regex symbols.
+
+- Additionally, use a counter to rename your files incrementally by inserting in Replacement tab this symbol **{n}**
+
+### _Getting Started_
+
+## _Prerequisites_
+
 Ensure you have Microsoft .NET Framework installed on your system.
 
-##Installation
+## _Installation_
+
 Clone the repository:
 
-git clone https://github.com/yourusername/cipher-sync.git
+```git clone https://github.com/yourusername/cipher-sync.git```
 
-Open the solution file (CipherSync.sln) in Visual Studio.
+Open the solution file **CipherSync.sln** in Visual Studio.
 
-##Usage
-Master Password:
+## _Usage_
 
-Register your Master Password upon the first use of the app.
+# _Master Password_
 
-Load the Master Password using the "Load Master Password" button.
+- Register your Master Password upon the first use of the app.
 
-##Contributing
+- Load the Master Password using the "Load Master Password" button.
+
+## _Contributing_
+
 Contributions are welcome! Please fork the repository and create a pull request.
 
-##License
+## _License_
 This project is licensed under the MIT License.
+
+## _Hint_
+
+The Installer is made without a signing it using thrid-part authority such as comodo which requires $200 yearly.
+When using the installer, you will be warned not to use it, this simply because the installer is not signed as explained, else it's 100% safe.
+Otherwise, just compile the code.
