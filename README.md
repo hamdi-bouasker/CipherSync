@@ -67,7 +67,7 @@ Open the solution file **CipherSync.sln** in Visual Studio.
 
 - Register your Master Password upon the first use of the app.
 
-- Load the Master Password using the "Load Master Password" button.
+- Load the Master Password using the **Load Master Password** button.
 
 ## _Contributing_
 
