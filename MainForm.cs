@@ -253,7 +253,7 @@ namespace CipherShield
             PasswordGeneratorClearPwdGenBtn.Enabled = hasPasswords;
         }
 
-        // copy passwords
+        // copy passwords - updated method
         private void copyPwdBtn_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(PasswordGeneratorGeneratedPwdTextBox.Text))
