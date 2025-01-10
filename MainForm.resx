@@ -117,6 +117,48 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FilesEncryptionDecryptFilesBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAA09JREFUSEvlk01oU2kUht+2jiKoi0FdSB2oCwu1iPEnOu1Ii0Rraom/aRVBQRe6
+        mBk6DDojiILLGXGhQt1ULOhGdKHQWwY6MyK6Ulrb2iRN0haV/qStqUlq1OZ+95V7k3ub+zWpP1sfOKuc
+        8z7fOdwA3zTsxw8cgIdhHGUINQxiidzz1XAQP4owHmr9oBbOVAgUIXwQQdygHyvkmS+CAzgh+pGSBVow
+        U32gCGCUfmyUZz8L9qNOhCFs4RmB6MNL0Ycnwg+hBUDhx8gXb8QgFogwBnO9XgTQwv8xz+gLwC18EPSB
+        9OG6nDMnDMEjv948D30ot/X24qkheY739GNx9m9zIsK4KIcbFQDpR43Zx6f4jr14xV5DQnZjuz1pDkQI
+        N3MJNL+xSVgXMYC17MVNS9Bj1BE5Ky8iiKu2cFOQltAINsNnBHrVyVl5YQDHba83w/MJukF2QWMXiuWs
+        vPAZlgs/kjkF8ut1gV7P8EDOyQuJgsS9gqbYv0XaJ1+f3kCvaXbCKWflRBekFDRNt4JT9wuZfFw4Ozwj
+        ePekgNFb33Ps72Lt9e+rm19v3LpSzpsFz6NQtKFZbQNVBZxW0qJYe5HGHiRNgdYFRm8tZdTr4mR1HaOV
+        bk44XYw4qsRoeUVLpKxqkZxtoG8gFDSJNlAvU5RSwLf3Cq6zA8vYjWPswuVYc3F7zL1XfePaY5OMOaoZ
+        Ka/kSKnz0fOysvl2QWYDU5Al6ki14pL+u9Xr9RYlauuD8Z37GT94nIlfTqclW3Ywdup8RrKZQ6vWN35S
+        IBRcs5qyiO859FNiVwN1yVTjGWrxOBO/neV7pZ3TnT2MrN1qSIZLHB3WkFBwZZYgvUW9LT3DlOfwMVOi
+        nytx6hyZSlEdfMHxylprk+FVjqQ1pCqIzDqRggPZJ8om4Tl00JLs2McP//xHdeAFtcQU3/z654ykxDFu
+        DQkFd7IlqVa4bakSyd0NK+O19UKXvL3wF1M9Pk5u38fYz39QfTVknWuoZP1da4i3sVAXqQomRBsu59sg
+        m3htQ4t5rsltnpmva8M2Y5PhUqc6UrLh8/6Y+Rj3eBbHavY/yvUJj66pUIdLN52UZ74Ker3zJ127G6PV
+        dZ3RCve7cadrYmxd1d2Rsi3WBh8BY4E+fmvRv4gAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="FilesEncryptionEncryptBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAA4dJREFUSEvlk11sU3UYxp9tCs6tTBj7sKxTbzQa45XRmHA1hVKtdYyVjX2wMS/0
+        klsT42IcgX1k4sBtunVQGUgqU0F2RpC5afDKZaOFfqztwACJGhcTAk5c+z+POac9pedsHR+3Psl7dd73
+        93vff3KA/3U4h3JehoNRNDECK8NYY+x54PAKXhFR/CTPgXI0WRFQRPCvCOMwgzAbZ+4rvIx3xBxiRoEc
+        TtYsKEL4nUG8aJy9p3AOdhGF0MGTAjGLq2IWv4gghBwCRRC/3fdFDGO1iOLKctuLENycwENqXwg2EYBg
+        AGQAQ0bOimEEDuP22vMwgOd1vX5MqZJLuM0gTOnfVoyIossIVysEMgir1scpPEw/rtGvSkgfNulJK0RE
+        MLycQA6ql0QVEUN4gX4MpwQX1dppZGWMCOOgDq4JEhKqYA1+R6CU3cjKGIbwtm57DZ5J4APphUwvyoys
+        jOEFFIsgFpYVGLdXBEpdwKSRkzEksm6ezOq7MZ4j33X7xAVKLXIGLxlZy0YRxCT0LY6Ct05lc+Hn7KXw
+        pODWVBZ/mCjlgPS0/N7pl13mL5stRt6SsBXZYgyu+BgYl8BFKSG6cS5H5kUsaALZC34/XsqNXzv5hGcX
+        y48303JsJ8uGG4TZXecu8jjzjWw1ygVCQp8YA5XSRDEJ/Ptk1hCnUUQfWuhFz4nxJ8899dWu+B14Izd8
+        UU/z4TqWDtWyZLDm/HMe5yq9IHmBJkgTTcdG0a18TzV7nDnlx5vClmNNSXgDBwNn6DjdyhJXDYsHnCz6
+        rJrre7fuvqtASOhPNaXFcrRxY9nRRm440kCzu46PH9rByes+Np3tTMD7trHw061cd6ByOjUkJBxYIkhc
+        sV1HT8Z8pL5Fg7v8Z/jjdR//un2Tl+Z/5eQ1L6u+beXaTxws+Ni+kBqKS/hjyRNJqNY9UVrMh3bUlrpq
+        WTKwnZWnPmDL2S5V0DP9DZuldj472MyC7je4ptP2Z2pISDiRLomNwqajGmIeqrEUf14tivq3sbC3iusO
+        VnLi6gzrv9uTgHe9TlPHFubt3TySGqIHuYooLmFejKEn0wXpWd9b5Vbga3ve4mP732TlyPt8pr+Bpg4b
+        8/dZmbdnUzy3reLefsxMKWx3mAr2288XdNsTm3famN9uVbbno22vxld/WPGucebB0upcZerYsjt/n3Um
+        b+/mf3LbXpt/5KOKkfQL/gO4YBY+TZKiDgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="textBox3.Text" xml:space="preserve">
     <value>Rename your files using REGEX pattern.
 
@@ -163,48 +205,6 @@ and load it in the input tab to automate the login process.
 
 This is to ensure the generated passwords are heavily complex.</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="FilesEncryptionDecryptFilesBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAA09JREFUSEvlk01oU2kUht+2jiKoi0FdSB2oCwu1iPEnOu1Ii0Rraom/aRVBQRe6
-        mBk6DDojiILLGXGhQt1ULOhGdKHQWwY6MyK6Ulrb2iRN0haV/qStqUlq1OZ+95V7k3ub+zWpP1sfOKuc
-        8z7fOdwA3zTsxw8cgIdhHGUINQxiidzz1XAQP4owHmr9oBbOVAgUIXwQQdygHyvkmS+CAzgh+pGSBVow
-        U32gCGCUfmyUZz8L9qNOhCFs4RmB6MNL0Ycnwg+hBUDhx8gXb8QgFogwBnO9XgTQwv8xz+gLwC18EPSB
-        9OG6nDMnDMEjv948D30ot/X24qkheY739GNx9m9zIsK4KIcbFQDpR43Zx6f4jr14xV5DQnZjuz1pDkQI
-        N3MJNL+xSVgXMYC17MVNS9Bj1BE5Ky8iiKu2cFOQltAINsNnBHrVyVl5YQDHba83w/MJukF2QWMXiuWs
-        vPAZlgs/kjkF8ut1gV7P8EDOyQuJgsS9gqbYv0XaJ1+f3kCvaXbCKWflRBekFDRNt4JT9wuZfFw4Ozwj
-        ePekgNFb33Ps72Lt9e+rm19v3LpSzpsFz6NQtKFZbQNVBZxW0qJYe5HGHiRNgdYFRm8tZdTr4mR1HaOV
-        bk44XYw4qsRoeUVLpKxqkZxtoG8gFDSJNlAvU5RSwLf3Cq6zA8vYjWPswuVYc3F7zL1XfePaY5OMOaoZ
-        Ka/kSKnz0fOysvl2QWYDU5Al6ki14pL+u9Xr9RYlauuD8Z37GT94nIlfTqclW3Ywdup8RrKZQ6vWN35S
-        IBRcs5qyiO859FNiVwN1yVTjGWrxOBO/neV7pZ3TnT2MrN1qSIZLHB3WkFBwZZYgvUW9LT3DlOfwMVOi
-        nytx6hyZSlEdfMHxylprk+FVjqQ1pCqIzDqRggPZJ8om4Tl00JLs2McP//xHdeAFtcQU3/z654ykxDFu
-        DQkFd7IlqVa4bakSyd0NK+O19UKXvL3wF1M9Pk5u38fYz39QfTVknWuoZP1da4i3sVAXqQomRBsu59sg
-        m3htQ4t5rsltnpmva8M2Y5PhUqc6UrLh8/6Y+Rj3eBbHavY/yvUJj66pUIdLN52UZ74Ker3zJ127G6PV
-        dZ3RCve7cadrYmxd1d2Rsi3WBh8BY4E+fmvRv4gAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="FilesEncryptionEncryptBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAA4dJREFUSEvlk11sU3UYxp9tCs6tTBj7sKxTbzQa45XRmHA1hVKtdYyVjX2wMS/0
-        klsT42IcgX1k4sBtunVQGUgqU0F2RpC5afDKZaOFfqztwACJGhcTAk5c+z+POac9pedsHR+3Psl7dd73
-        93vff3KA/3U4h3JehoNRNDECK8NYY+x54PAKXhFR/CTPgXI0WRFQRPCvCOMwgzAbZ+4rvIx3xBxiRoEc
-        TtYsKEL4nUG8aJy9p3AOdhGF0MGTAjGLq2IWv4gghBwCRRC/3fdFDGO1iOLKctuLENycwENqXwg2EYBg
-        AGQAQ0bOimEEDuP22vMwgOd1vX5MqZJLuM0gTOnfVoyIossIVysEMgir1scpPEw/rtGvSkgfNulJK0RE
-        MLycQA6ql0QVEUN4gX4MpwQX1dppZGWMCOOgDq4JEhKqYA1+R6CU3cjKGIbwtm57DZ5J4APphUwvyoys
-        jOEFFIsgFpYVGLdXBEpdwKSRkzEksm6ezOq7MZ4j33X7xAVKLXIGLxlZy0YRxCT0LY6Ct05lc+Hn7KXw
-        pODWVBZ/mCjlgPS0/N7pl13mL5stRt6SsBXZYgyu+BgYl8BFKSG6cS5H5kUsaALZC34/XsqNXzv5hGcX
-        y48303JsJ8uGG4TZXecu8jjzjWw1ygVCQp8YA5XSRDEJ/Ptk1hCnUUQfWuhFz4nxJ8899dWu+B14Izd8
-        UU/z4TqWDtWyZLDm/HMe5yq9IHmBJkgTTcdG0a18TzV7nDnlx5vClmNNSXgDBwNn6DjdyhJXDYsHnCz6
-        rJrre7fuvqtASOhPNaXFcrRxY9nRRm440kCzu46PH9rByes+Np3tTMD7trHw061cd6ByOjUkJBxYIkhc
-        sV1HT8Z8pL5Fg7v8Z/jjdR//un2Tl+Z/5eQ1L6u+beXaTxws+Ni+kBqKS/hjyRNJqNY9UVrMh3bUlrpq
-        WTKwnZWnPmDL2S5V0DP9DZuldj472MyC7je4ptP2Z2pISDiRLomNwqajGmIeqrEUf14tivq3sbC3iusO
-        VnLi6gzrv9uTgHe9TlPHFubt3TySGqIHuYooLmFejKEn0wXpWd9b5Vbga3ve4mP732TlyPt8pr+Bpg4b
-        8/dZmbdnUzy3reLefsxMKWx3mAr2288XdNsTm3famN9uVbbno22vxld/WPGucebB0upcZerYsjt/n3Um
-        b+/mf3LbXpt/5KOKkfQL/gO4YBY+TZKiDgAAAABJRU5ErkJggg==
-</value>
-  </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>171, 17</value>
   </metadata>
@@ -217,7 +217,7 @@ This is to ensure the generated passwords are heavily complex.</value>
   <data name="label13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAATRJREFUSEvllMEqBlEYhh9WVhZYWrGQ4grUnxuwsBVhIzuy4CL0Jzu27KS4BylL
+        EAAACxABrSO9dQAAATRJREFUSEvllMEqBlEYhh9WVhZYWrGQ4grUnxuwsBVhIzuy4CL0Jzu27KS4BylL
         5SIkVkQJ0VvfV///+WaaGXbz1tPpzHnf99TMnANt0AAwDswBS8AGsGfs2lzPtS6f/JU0DHSBG+AF+K7B
         s+WUV0+h9pNwE9RTqLMk0AT1FKodm3wCR8AacGzz6PnzJtvBu5N4Km1ymgSckeAdTTzOSfD26TAJOBPB
         O5l4nIPg7dNmEnAugCHzabxMPI5ug0JNJ4Fe9DqlstcqpkLvL90lIcc/aNkPchv6Uq0nQefcPBrjmrMa
