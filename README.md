@@ -15,9 +15,9 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 - The file is encrypted using the Data Protection API (DPAPI) with AES-256 encryption.
 
-- You can log in by clicking on the button **Load Master Password**.
+- You can easily login by clicking on the button **Load Master Password**.
 
-- You change your Master Password anytime
+- You can change your Master Password anytime
 
 ### _Password Generator_
 
