@@ -2,6 +2,7 @@
 
 ## _Description_
 Cipher Sync protects your files and passwords from unauthorized intruders.
+Tested on Windows 11 and Windows 10.
 
 ## _Features_
 
@@ -59,6 +60,10 @@ Generates complex passwords composed of:
 - Easily rename your files using C# regex symbols.
 
 - Additionally, you can use a counter to rename your files incrementally by inserting in **Replacement tab** this symbol **{n}**
+
+ ### _QA Testing_ 
+
+ The app was heavily tested. All fnctionalities are 100% flawless.
 
 ## _Getting Started_
 
