@@ -21,7 +21,7 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ### _Password Generator_
 
-![CipherShield1.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield1.png)
+![CipherShield2.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield1.png)
 
 Generates complex passwords composed of:
 
@@ -35,7 +35,7 @@ Generates complex passwords composed of:
 
 ### _Files Encryption_
 
-![CipherShield2.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield2.png)
+![CipherShield1.png](https://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield2.png)
 
 - Encrypts any files (Word,Excel, PowerPoint, PDF, JPG ect.) using AES-256 encryption.
 
