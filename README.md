@@ -7,6 +7,8 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ### _Master Password_
 
+![CipherShield5.png](ttps://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield5.png)
+
 - A Master Password is registered when you use the app for the first time.
 
 - The Master Password is automatically backed up in an encrypted file named Master-Password.dat.
@@ -15,7 +17,11 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 - You can log in by clicking on the button **Load Master Password**.
 
+- You change your Master Password anytime
+
 ### _Password Generator_
+
+![CipherShield1.png](ttps://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield1.png)
 
 - Generates complex passwords composed of:
 
@@ -29,6 +35,8 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ### _Files Encryption_
 
+![CipherShield2.png](ttps://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield2.png)
+
 - Encrypts files using AES-256 encryption.
 
 - The password used for encryption is saved to an encrypted backup file.
@@ -37,11 +45,15 @@ Cipher Sync protects your files and passwords from unauthorized intruders.
 
 ### _Password Manager_
 
+![CipherShield3.png](ttps://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield3.png)
+
 - Inputs are saved to an encrypted database.
 
 - The database uses SQLCipher with AES-256 encryption.
 
 ### _REGEX Files Renamer_
+
+![CipherShield4.png](ttps://github.com/hamdi-bouasker/CipherSync/blob/master/CipherShield4.png)
 
 - Easily rename your files using C# regex symbols.
 
