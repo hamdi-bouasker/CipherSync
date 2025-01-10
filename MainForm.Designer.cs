@@ -625,10 +625,10 @@
             tabPage2.Controls.Add(label3);
             tabPage2.Controls.Add(label2);
             tabPage2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage2.Location = new System.Drawing.Point(4, 24);
+            tabPage2.Location = new System.Drawing.Point(4, 27);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(752, 524);
+            tabPage2.Size = new System.Drawing.Size(752, 521);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Regex Files Renamer";
             // 
@@ -842,7 +842,7 @@
             RepeatNewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             RepeatNewPasswordTxtBox.Location = new System.Drawing.Point(247, 277);
             RepeatNewPasswordTxtBox.Name = "RepeatNewPasswordTxtBox";
-            RepeatNewPasswordTxtBox.PlaceholderText = "             Repeat new password";
+            RepeatNewPasswordTxtBox.PlaceholderText = "Repeat new password";
             RepeatNewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             RepeatNewPasswordTxtBox.TabIndex = 12;
             RepeatNewPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -854,7 +854,7 @@
             NewPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             NewPasswordTxtBox.Location = new System.Drawing.Point(247, 210);
             NewPasswordTxtBox.Name = "NewPasswordTxtBox";
-            NewPasswordTxtBox.PlaceholderText = "              Enter new password";
+            NewPasswordTxtBox.PlaceholderText = "Enter new password";
             NewPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             NewPasswordTxtBox.TabIndex = 11;
             NewPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -866,7 +866,7 @@
             oldPasswordTxtBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             oldPasswordTxtBox.Location = new System.Drawing.Point(247, 150);
             oldPasswordTxtBox.Name = "oldPasswordTxtBox";
-            oldPasswordTxtBox.PlaceholderText = "               Enter current Password";
+            oldPasswordTxtBox.PlaceholderText = "Enter current Password";
             oldPasswordTxtBox.Size = new System.Drawing.Size(239, 19);
             oldPasswordTxtBox.TabIndex = 10;
             oldPasswordTxtBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -923,9 +923,9 @@
             label17.ForeColor = System.Drawing.Color.DodgerBlue;
             label17.Location = new System.Drawing.Point(209, 24);
             label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(301, 38);
+            label17.Size = new System.Drawing.Size(264, 38);
             label17.TabIndex = 12;
-            label17.Text = "Cipher Sync ®\r\n© 2025 CompanyName.  All rights reserved. ";
+            label17.Text = "Cipher Sync ®\r\n© 2025 Tuntech.  All rights reserved. ";
             label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label16

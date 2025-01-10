@@ -11,6 +11,7 @@ namespace CipherShield
         public LoginForm()
         {
             InitializeComponent();
+            this.menuBarLbl.MakeDraggable(this); // Make the form draggable
         }
 
         // Submit the master password for login
@@ -25,8 +26,8 @@ namespace CipherShield
                 // Display a toast notification for successful login
                 new ToastContentBuilder()
                     .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Login successful")
-                    .AddText("Welcome back to Cipher Shield")
+                    .AddText("Login Successful")
+                    .AddText("Welcome Back to Cipher Shield")
                     .Show();
                 this.DialogResult = DialogResult.OK;
                 Close();
@@ -39,7 +40,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                      .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
                     .AddText("Login failed!")
-                    .AddText("Check your password or click on Load Master Password")
+                    .AddText("Check Your Password or Click on Load Master Password")
                     .Show();
                 return;
             }
@@ -67,7 +68,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                      .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("No backup file found!")
+                    .AddText("No Backup File Found")
                     .Show();
                 return;
             }

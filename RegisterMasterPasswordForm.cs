@@ -12,6 +12,7 @@ namespace CipherShield
         public RegisterMasterPasswordForm()
         {
             InitializeComponent();
+            this.menuBarLbl.MakeDraggable(this); // Make the form draggable
         }
 
         // Submit the master password for registration
@@ -24,7 +25,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
 
-                    .AddText("Please enter a password!")
+                    .AddText("Please Enter a Password")
                     .Show();
                 return;
             }
@@ -35,7 +36,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
 
-                    .AddText("Passwords do not match!")
+                    .AddText("Passwords Do Not Match!")
                     .Show();
                 return;
             }
@@ -46,7 +47,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
 
-                    .AddText("Password must be at least 8 characters long!")
+                    .AddText("Password Must Be At Least 8 Characters Long!")
                     .Show();
                 return;
             }
@@ -59,7 +60,7 @@ namespace CipherShield
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
 
-                    .AddText("The Master password has been successfully registered")
+                    .AddText("The Master Password Has Been Successfully Registered")
                     .Show();
                 this.DialogResult = DialogResult.OK; // Set DialogResult to OK
                 Close();

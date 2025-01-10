@@ -47,8 +47,9 @@ namespace CipherShield
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetControlsEnabled(false); // Method to disable controls
-
-            if (!File.Exists("credentials.db"))
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
+            if (!File.Exists(filePath))
             {
                 RegisterMasterPasswordForm registerMasterPasswordForm = new RegisterMasterPasswordForm();
                 registerMasterPasswordForm.ShowDialog();
@@ -112,6 +113,75 @@ namespace CipherShield
             ActiveForm.WindowState = FormWindowState.Minimized;
         }
 
+        // change master password
+        private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
+        {
+
+            string currentPassword = SecureStorage.GetPassword();
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+            string dbFilePath = Path.Combine(appDataPath, "credentials.db");
+
+            if (oldPasswordTxtBox.Text != currentPassword)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("Current Password Is Incorrect")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length == 0)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+
+                    .AddText("Please Enter a New Password")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text != RepeatNewPasswordTxtBox.Text)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+
+                    .AddText("New Passwords Do Not Match")
+                    .Show();
+                return;
+            }
+
+            if (NewPasswordTxtBox.Text.Length < 8)
+            {
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
+                new ToastContentBuilder()
+                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+
+                    .AddText("New Password Must Be At Least 8 Characters Long")
+                    .Show();
+                return;
+            }
+            SecureStorage.ChangeDatabasePassword(dbFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
+            SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
+            string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+            Uri successUri = new Uri($"file:///{successIcon}");
+            new ToastContentBuilder()
+                .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+
+                .AddText("The Master Password Has Been Successfully Changed" +
+                Environment.NewLine + " Cipher Shield Will Be Restarted")
+
+                .Show();
+            Application.Restart();
+        }
+
         // method to generate a password
         private string GeneratePassword(int length = 16)
         {
@@ -158,71 +228,6 @@ namespace CipherShield
 
             // Shuffle the entire password to mix the characters
             return new string(chars.OrderBy(x => randomBytes[new Random().Next(randomBytes.Length)]).ToArray());
-        }
-
-
-        // change master password
-        private void SubmitNewPasswordBtn_Click(object sender, EventArgs e)
-        {
-            string currentPassword = SecureStorage.GetPassword();
-            string databaseFilePath = "C:/Users/hamdi/source/repos/P-GEN/bin/Debug/net8.0-windows10.0.17763.0/credentials.db";
-
-            if (oldPasswordTxtBox.Text != currentPassword)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Current password is incorrect!")
-                    .Show();
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text.Length == 0)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-
-                    .AddText("Please enter a new password!")
-                    .Show();
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text != RepeatNewPasswordTxtBox.Text)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-
-                    .AddText("New passwords do not match!")
-                    .Show();
-                return;
-            }
-
-            if (NewPasswordTxtBox.Text.Length < 8)
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-
-                    .AddText("New password must be at least 8 characters long!")
-                    .Show();
-                return;
-            }
-            SecureStorage.ChangeDatabasePassword(databaseFilePath, currentPassword, RepeatNewPasswordTxtBox.Text);
-            SecureStorage.UpdatePassword(RepeatNewPasswordTxtBox.Text);
-            string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-            Uri successUri = new Uri($"file:///{successIcon}");
-            new ToastContentBuilder()
-                .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-
-                .AddText("The master password has been successfully changed. Cipher Shield will be restarted.")
-                .Show();
-            Application.Restart();
         }
 
         #region Password Generator Tab
@@ -345,7 +350,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please fill in all fields!")
+                    .AddText("Please Fill In All Fields")
                     .Show();
                 return;
             }
@@ -364,7 +369,7 @@ namespace CipherShield
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("The entry has benn successfully added ")
+                    .AddText("The Entry Has Been Successfully Added ")
                     .Show();
             }
 
@@ -388,7 +393,7 @@ namespace CipherShield
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("Successfully updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}")
+                        .AddText("Successfully Updated:" + Environment.NewLine + $"Website: {entry.Website}" + Environment.NewLine + $"Username: {entry.Username}" + Environment.NewLine + $"Password: {entry.Password}")
                         .Show();
                     LoadData();
                     ClearInputFields();
@@ -400,7 +405,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select an entry to edit!")
+                    .AddText("Please Select An Entry To Edit")
                     .Show();
             }
         }
@@ -418,7 +423,7 @@ namespace CipherShield
                 Uri infoUri = new Uri($"file:///{infoIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("The entry has been deleted!")
+                    .AddText("The Entry Has Been Deleted")
                     .Show();
             }
             else
@@ -427,7 +432,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select an entry to delete!")
+                    .AddText("Please Select An Entry To Delete!")
                     .Show();
             }
         }
@@ -461,7 +466,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("There is no data to print!")
+                    .AddText("There Is No Data To Print!")
                     .Show();
                 return;
             }
@@ -548,7 +553,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("No data to export.")
+                    .AddText("There Is No Data To Export")
                     .Show();
                 return;
             }
@@ -566,7 +571,7 @@ namespace CipherShield
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The data has been successfully exported!")
+                        .AddText("The Data Has Been Successfully Exported")
                         .Show();
                 }
             }
@@ -606,7 +611,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a password to backup!")
+                    .AddText("Please Enter a Password To Backup")
                     .Show();
                 return;
             }
@@ -626,7 +631,7 @@ namespace CipherShield
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The Password backup has been saved. Keep this file safe!")
+                        .AddText("The Password Backup File Has Been Saved" + Environment.NewLine + "Keep This File Safe")
                         .Show();
                 }
                 catch (Exception ex)
@@ -635,7 +640,7 @@ namespace CipherShield
                     Uri errorUri = new Uri($"file:///{errorIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText($"Error saving password backup: {ex.Message}")
+                        .AddText($"Error Saving Password Backup File: {ex.Message}")
                         .Show();
                 }
             }
@@ -692,7 +697,7 @@ namespace CipherShield
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The password has been successfully loaded from backup.")
+                        .AddText("The Password Has Been Successfully Loaded")
                         .Show();
                 }
                 catch (Exception ex)
@@ -701,7 +706,7 @@ namespace CipherShield
                     Uri errorUri = new Uri($"file:///{errorIcon}");
                     new ToastContentBuilder()
                         .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText($"Error loading the password backup: {ex.Message}")
+                        .AddText($"Error Loading The Password Backup: {ex.Message}")
                         .Show();
                 }
             }
@@ -711,7 +716,7 @@ namespace CipherShield
                 Uri infoUri = new Uri($"file:///{infoIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("No file selected!")
+                    .AddText("No File Selected!")
                     .Show();
             }
 
@@ -767,7 +772,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select the files first!")
+                    .AddText("Please Select The Files First")
                     .Show();
                 return;
             }
@@ -778,7 +783,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a password!")
+                    .AddText("Please Enter a Password")
                     .Show();
                 return;
             }
@@ -814,7 +819,7 @@ namespace CipherShield
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("All files have been successfully encrypted")
+                    .AddText("All Files Have Been Successfully Encrypted")
                     .Show();
             }
             catch (Exception ex)
@@ -841,7 +846,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select the files first!")
+                    .AddText("Please Select The Files First")
                     .Show();
                 return;
             }
@@ -852,7 +857,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a password!")
+                    .AddText("Please Enter a Password")
                     .Show();
                 return;
             }
@@ -889,7 +894,7 @@ namespace CipherShield
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("All files have been successfully decrypted")
+                    .AddText("All Files Have Been Successfully Decrypted")
                     .Show();
             }
             catch (Exception ex)
@@ -1103,7 +1108,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("No files selected!")
+                    .AddText("No Files Selected")
                     .Show();
 
             }
@@ -1171,7 +1176,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a regex pattern!")
+                    .AddText("Please Enter a Regex Pattern")
                     .Show();
                 return;
             }
@@ -1182,7 +1187,7 @@ namespace CipherShield
                 Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select the files to rename!")
+                    .AddText("Please Select The Files To Rename")
                     .Show();
                 return;
             }
@@ -1217,7 +1222,7 @@ namespace CipherShield
                 Uri successUri = new Uri($"file:///{successIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("New files names have been previewed")
+                    .AddText("New Files Names Have Been Previewed")
                     .Show();
 
                 RegexRenameFilesBtn.Enabled = hasChanges;
@@ -1243,7 +1248,7 @@ namespace CipherShield
                 Uri ErrorUri = new Uri($"file:///{ErrorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(ErrorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please enter a regex pattern!")
+                    .AddText("Please Enter a Regex Pattern!")
                     .Show();
                 return;
             }
@@ -1254,7 +1259,7 @@ namespace CipherShield
                 Uri ErrorUri = new Uri($"file:///{ErrorIcon}");
                 new ToastContentBuilder()
                     .AddAppLogoOverride(ErrorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please select the files to rename!")
+                    .AddText("Please Select The Files To Rename!")
                     .Show();
                 return;
             }
@@ -1325,7 +1330,7 @@ namespace CipherShield
             Uri errorUri = new Uri($"file:///{errorIcon}");
             new ToastContentBuilder()
                 .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                .AddText($"Renaming Results: {errors.Any()}")
+                .AddText($"Renaming results: {errors.Any()}")
                 .Show();
 
             RegexRenameFilesBtn.Enabled = false;

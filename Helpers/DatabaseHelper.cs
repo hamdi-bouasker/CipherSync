@@ -1,6 +1,8 @@
 ﻿using CipherShield.Models;
 using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CipherShield.Helpers
 {
@@ -8,7 +10,6 @@ namespace CipherShield.Helpers
     {
         private readonly string _connectionString;
 
-        
         static DatabaseHelper()
         {
             // Initialize SQLitePCL to use SQLCipher
@@ -18,7 +19,12 @@ namespace CipherShield.Helpers
         // Constructor for the database helper
         public DatabaseHelper(string password)
         {
-            _connectionString = $"Data Source=credentials.db;Password={password}";
+            // Create the path to the AppData folder
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+
+            string dbFilePath = Path.Combine(appDataPath, "credentials.db");
+            _connectionString = $"Data Source={dbFilePath};Password={password}";
             InitializeDatabase();
         }
 

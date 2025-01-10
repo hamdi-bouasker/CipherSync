@@ -3,15 +3,37 @@
     <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CipherShield</RootNamespace>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <UseWPF>True</UseWPF>
     <StartupObject>CipherShield.Program</StartupObject>
-    <ApplicationIcon>Icons\lockICO.ico</ApplicationIcon>
-    <PackageIcon>lockPNG.png</PackageIcon>
+    <ApplicationIcon>Icons\CipherProgramIco.ico</ApplicationIcon>
+    <PackageIcon>CipherProgramPNG.png</PackageIcon>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>Cipher Shield</AssemblyOriginatorKeyFile>
+    <Description>Protect Your Files and Credentials From Unauthorized Access</Description>
+    <Copyright>Cipher Sync © 2025 Tuntech.  All rights reserved.</Copyright>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <Title>Cipher Shield</Title>
+    <Authors>Hamdi Bouasker</Authors>
+    <Company>TUNTECH</Company>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Product>Cipher Shield</Product>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Icons\CipherProgramIcon.ico" />
+    <None Remove="Icons\CipherProgramPNG.png" />
     <None Remove="Icons\close.png" />
     <None Remove="Icons\error.png" />
     <None Remove="Icons\icons8-close-17.png" />
@@ -23,6 +45,14 @@
     <None Remove="Icons\warning.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icons\CipherProgramIco.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\CipherProgramPNG.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -30,9 +60,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\info.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Icons\lockICO.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\lockPNG.png">

@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Data.Sqlite;
@@ -16,21 +18,30 @@ namespace CipherShield
         };
 
         // Save the master password to a file
+        // Save the master password to a file
         public static void SavePassword(string password)
         {
             byte[] encryptedPassword = ProtectedData.Protect(
                 Encoding.UTF8.GetBytes(password), AdditionalEntropy, DataProtectionScope.CurrentUser);
-            System.IO.File.WriteAllBytes("Master-Password.dat", encryptedPassword);
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            Directory.CreateDirectory(appDataPath); // Ensure the directory exists
+            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
+            File.WriteAllBytes(filePath, encryptedPassword);
         }
+
 
         // Retrieve the master password from the file
         public static string GetPassword()
         {
-            byte[] encryptedPassword = System.IO.File.ReadAllBytes("Master-Password.dat");
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cipher Shield");
+            string filePath = Path.Combine(appDataPath, "Master-Password.dat");
+
+            byte[] encryptedPassword = File.ReadAllBytes(filePath);
             byte[] decryptedPassword = ProtectedData.Unprotect(
                 encryptedPassword, AdditionalEntropy, DataProtectionScope.CurrentUser);
             return Encoding.UTF8.GetString(decryptedPassword);
         }
+
 
         // Update the master password
         public static void UpdatePassword(string newPassword) 
