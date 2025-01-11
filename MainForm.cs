@@ -29,6 +29,7 @@ namespace CipherShield
         private int counter = 0;
         string[] hints = { "It's always a great idea to backup your files to the cloud and to an external drive.", "Always backup your passwords to different safe places.", "The more backups you do, the easier to restore.", "Consider backup your important files by printing them.", "Daily system backup to an external drive is your best choice.", "A stitch in time saves nine." };
 
+        // mainform method
         public MainForm()
         {
             InitializeComponent();
@@ -262,10 +263,17 @@ namespace CipherShield
                 {
                     Clipboard.Clear(); // Clear the clipboard first
                     Clipboard.SetDataObject(PasswordGeneratorGeneratedPwdTextBox.Text, true); // Use the copy retry option
+<<<<<<< HEAD
 
                     PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
                     PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
+=======
+        
+                    PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
+                    PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
+        
+>>>>>>> 34eb46701b7ba1e34f844218c0be3b6b207aacf0
                     string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
@@ -283,6 +291,7 @@ namespace CipherShield
                         .AddText("Clipboard Operation Failed: " + ex.Message)
                         .Show();
                 }
+<<<<<<< HEAD
             }
             else
             {
@@ -294,6 +303,19 @@ namespace CipherShield
                     .Show();
             }
         }
+=======
+    }
+    else
+    {
+        string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+        Uri errorUri = new Uri($"file:///{errorIcon}");
+        new ToastContentBuilder()
+            .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+            .AddText("There Is No Passwords To Copy")
+            .Show();
+    }
+}
+>>>>>>> 34eb46701b7ba1e34f844218c0be3b6b207aacf0
 
 
         // export passwords
