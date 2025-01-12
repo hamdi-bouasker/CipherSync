@@ -65,7 +65,6 @@
             FilesEncryptionEncryptBtn = new System.Windows.Forms.Button();
             cFilesEncryptionCearBtn = new System.Windows.Forms.Button();
             FilesEncryptionLoadBackupBtn = new System.Windows.Forms.Button();
-            FilesEncryptionBackupPwdBtn = new System.Windows.Forms.Button();
             FilesEncryptionGeneratePasswordBtn = new System.Windows.Forms.Button();
             FilesEncryptionBrowseFilesBtn = new System.Windows.Forms.Button();
             FileEncryptionFilesNumberTxtBox = new System.Windows.Forms.TextBox();
@@ -446,15 +445,14 @@
             tabPage1.Controls.Add(FilesEncryptionEncryptBtn);
             tabPage1.Controls.Add(cFilesEncryptionCearBtn);
             tabPage1.Controls.Add(FilesEncryptionLoadBackupBtn);
-            tabPage1.Controls.Add(FilesEncryptionBackupPwdBtn);
             tabPage1.Controls.Add(FilesEncryptionGeneratePasswordBtn);
             tabPage1.Controls.Add(FilesEncryptionBrowseFilesBtn);
             tabPage1.Controls.Add(FileEncryptionFilesNumberTxtBox);
             tabPage1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage1.Location = new System.Drawing.Point(4, 24);
+            tabPage1.Location = new System.Drawing.Point(4, 27);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(752, 524);
+            tabPage1.Size = new System.Drawing.Size(752, 521);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Files Encryption";
             // 
@@ -552,29 +550,16 @@
             FilesEncryptionLoadBackupBtn.Name = "FilesEncryptionLoadBackupBtn";
             FilesEncryptionLoadBackupBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionLoadBackupBtn.TabIndex = 5;
-            FilesEncryptionLoadBackupBtn.Text = "Load Backup Password";
+            FilesEncryptionLoadBackupBtn.Text = "Load Password";
             FilesEncryptionLoadBackupBtn.UseVisualStyleBackColor = false;
             FilesEncryptionLoadBackupBtn.Click += LoadBackupButton_Click;
-            // 
-            // FilesEncryptionBackupPwdBtn
-            // 
-            FilesEncryptionBackupPwdBtn.BackColor = System.Drawing.Color.PowderBlue;
-            FilesEncryptionBackupPwdBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            FilesEncryptionBackupPwdBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionBackupPwdBtn.Location = new System.Drawing.Point(565, 162);
-            FilesEncryptionBackupPwdBtn.Name = "FilesEncryptionBackupPwdBtn";
-            FilesEncryptionBackupPwdBtn.Size = new System.Drawing.Size(158, 33);
-            FilesEncryptionBackupPwdBtn.TabIndex = 4;
-            FilesEncryptionBackupPwdBtn.Text = "Backup Password";
-            FilesEncryptionBackupPwdBtn.UseVisualStyleBackColor = false;
-            FilesEncryptionBackupPwdBtn.Click += BackupPasswordButton_Click;
             // 
             // FilesEncryptionGeneratePasswordBtn
             // 
             FilesEncryptionGeneratePasswordBtn.BackColor = System.Drawing.Color.PowderBlue;
             FilesEncryptionGeneratePasswordBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             FilesEncryptionGeneratePasswordBtn.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold);
-            FilesEncryptionGeneratePasswordBtn.Location = new System.Drawing.Point(565, 73);
+            FilesEncryptionGeneratePasswordBtn.Location = new System.Drawing.Point(565, 137);
             FilesEncryptionGeneratePasswordBtn.Name = "FilesEncryptionGeneratePasswordBtn";
             FilesEncryptionGeneratePasswordBtn.Size = new System.Drawing.Size(158, 33);
             FilesEncryptionGeneratePasswordBtn.TabIndex = 3;
@@ -889,10 +874,10 @@
             tabPage6.BackColor = System.Drawing.Color.FromArgb(32, 33, 36);
             tabPage6.Controls.Add(panel1);
             tabPage6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            tabPage6.Location = new System.Drawing.Point(4, 27);
+            tabPage6.Location = new System.Drawing.Point(4, 24);
             tabPage6.Name = "tabPage6";
             tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            tabPage6.Size = new System.Drawing.Size(752, 521);
+            tabPage6.Size = new System.Drawing.Size(752, 524);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "About";
             // 
@@ -913,7 +898,7 @@
             panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             panel1.Location = new System.Drawing.Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(746, 515);
+            panel1.Size = new System.Drawing.Size(746, 518);
             panel1.TabIndex = 0;
             // 
             // label17
@@ -1154,7 +1139,6 @@
         private System.Windows.Forms.Button FilesEncryptionEncryptBtn;
         private System.Windows.Forms.Button cFilesEncryptionCearBtn;
         private System.Windows.Forms.Button FilesEncryptionLoadBackupBtn;
-        private System.Windows.Forms.Button FilesEncryptionBackupPwdBtn;
         private System.Windows.Forms.Button FilesEncryptionGeneratePasswordBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox FilesEncryptionEnterPwdTxtBox;

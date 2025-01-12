@@ -263,17 +263,10 @@ namespace CipherShield
                 {
                     Clipboard.Clear(); // Clear the clipboard first
                     Clipboard.SetDataObject(PasswordGeneratorGeneratedPwdTextBox.Text, true); // Use the copy retry option
-<<<<<<< HEAD
 
                     PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
                     PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
 
-=======
-        
-                    PasswordGeneratorCountNumeric.Value = PasswordGeneratorCountNumeric.Minimum;
-                    PasswordGeneratorLengthNumeric.Value = PasswordGeneratorLengthNumeric.Minimum;
-        
->>>>>>> 34eb46701b7ba1e34f844218c0be3b6b207aacf0
                     string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
                     Uri successUri = new Uri($"file:///{successIcon}");
                     new ToastContentBuilder()
@@ -291,7 +284,6 @@ namespace CipherShield
                         .AddText("Clipboard Operation Failed: " + ex.Message)
                         .Show();
                 }
-<<<<<<< HEAD
             }
             else
             {
@@ -303,19 +295,6 @@ namespace CipherShield
                     .Show();
             }
         }
-=======
-    }
-    else
-    {
-        string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-        Uri errorUri = new Uri($"file:///{errorIcon}");
-        new ToastContentBuilder()
-            .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-            .AddText("There Is No Passwords To Copy")
-            .Show();
-    }
-}
->>>>>>> 34eb46701b7ba1e34f844218c0be3b6b207aacf0
 
 
         // export passwords
@@ -641,49 +620,49 @@ namespace CipherShield
         #region Files Encryptor Tab
 
         // backup the files encryption password to a file then encrypt it
-        private void BackupPasswordButton_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
-            {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please Enter a Password To Backup")
-                    .Show();
-                return;
-            }
+        //private void BackupPasswordButton_Click(object sender, EventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
+        //    {
+        //        string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+        //        Uri errorUri = new Uri($"file:///{errorIcon}");
+        //        new ToastContentBuilder()
+        //            .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+        //            .AddText("Please Enter a Password To Backup")
+        //            .Show();
+        //        return;
+        //    }
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Password files (*.pwd)|*.pwd|All files (*.*)|*.*";
-            sfd.FilterIndex = 1;
-            sfd.DefaultExt = "pwd";
+        //    SaveFileDialog sfd = new SaveFileDialog();
+        //    sfd.Filter = "Password files (*.pwd)|*.pwd|All files (*.*)|*.*";
+        //    sfd.FilterIndex = 1;
+        //    sfd.DefaultExt = "pwd";
 
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
-                    File.WriteAllBytes(sfd.FileName, encryptedPassword);
-                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                    Uri successUri = new Uri($"file:///{successIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The Password Backup File Has Been Saved" + Environment.NewLine + "Keep This File Safe")
-                        .Show();
-                }
-                catch (Exception ex)
-                {
-                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                    Uri errorUri = new Uri($"file:///{errorIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText($"Error Saving Password Backup File: {ex.Message}")
-                        .Show();
-                }
-            }
+        //    if (sfd.ShowDialog() == DialogResult.OK)
+        //    {
+        //        try
+        //        {
+        //            byte[] encryptedPassword = EncryptPassword(FilesEncryptionEnterPwdTxtBox.Text);
+        //            File.WriteAllBytes(sfd.FileName, encryptedPassword);
+        //            string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
+        //            Uri successUri = new Uri($"file:///{successIcon}");
+        //            new ToastContentBuilder()
+        //                .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
+        //                .AddText("The Password Backup File Has Been Saved" + Environment.NewLine + "Keep This File Safe")
+        //                .Show();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+        //            Uri errorUri = new Uri($"file:///{errorIcon}");
+        //            new ToastContentBuilder()
+        //                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+        //                .AddText($"Error Saving Password Backup File: {ex.Message}")
+        //                .Show();
+        //        }
+        //    }
 
-        }
+        //}
 
         // browse files to encrypt
         private void BrowseFiles_Click(object sender, EventArgs e)
@@ -717,45 +696,21 @@ namespace CipherShield
         // load encryption password from backup file
         private void LoadBackupButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Password files (*.pwd)|*.pwd|All files (*.*)|*.*";
-            ofd.FilterIndex = 1;
-
-            if (ofd.ShowDialog() == DialogResult.OK)
+            try
             {
-                try
-                {
-                    byte[] encryptedPassword = File.ReadAllBytes(ofd.FileName);
-                    string decryptedPassword = DecryptPassword(encryptedPassword);
-                    if (FilesEncryptionEnterPwdTxtBox != null)
-                    {
-                        FilesEncryptionEnterPwdTxtBox.Text = decryptedPassword;
-                    }
-                    string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                    Uri successUri = new Uri($"file:///{successIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                        .AddText("The Password Has Been Successfully Loaded")
-                        .Show();
-                }
-                catch (Exception ex)
-                {
-                    string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                    Uri errorUri = new Uri($"file:///{errorIcon}");
-                    new ToastContentBuilder()
-                        .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                        .AddText($"Error Loading The Password Backup: {ex.Message}")
-                        .Show();
-                }
+                var password = PasswordStorage.GetPassword();
+                FilesEncryptionEnterPwdTxtBox.Text = password;
             }
-            else
+
+            catch
             {
-                string infoIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "info.png");
-                Uri infoUri = new Uri($"file:///{infoIcon}");
+                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
+                Uri errorUri = new Uri($"file:///{errorIcon}");
                 new ToastContentBuilder()
-                    .AddAppLogoOverride(infoUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("No File Selected!")
+                     .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
+                    .AddText("No Password File Found")
                     .Show();
+                return;
             }
 
         }
@@ -803,26 +758,15 @@ namespace CipherShield
         // method to encrypt the selected files
         private async void EncryptButton_Click_1(object sender, EventArgs e)
         {
-
             if (selectedFiles1.Count == 0)
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please Select The Files First")
-                    .Show();
+                ShowNotification("Please Select The Files First", "error.png");
                 return;
             }
 
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please Enter a Password")
-                    .Show();
+                ShowNotification("Please Enter a Password", "error.png");
                 return;
             }
 
@@ -832,6 +776,11 @@ namespace CipherShield
             try
             {
                 progressBar.Visible = true;
+
+                // autsave the encryption password
+                PasswordStorage.SavePassword(FilesEncryptionEnterPwdTxtBox.Text);
+                ShowNotification("Your Password is Automatically Saved. To Decrypt Just Click On Load Password", "info.png");
+
                 await Task.Run(async () =>
                 {
                     await Parallel.ForEachAsync(selectedFiles1, async (file, cancellationToken) =>
@@ -839,35 +788,22 @@ namespace CipherShield
                         try
                         {
                             await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, true);
-
+                            string encryptedFile = $"{file}.CIPHER-SHIELDED";
+                            File.Move(file, encryptedFile); // Rename the file
                             progressBar.Invoke(new Action(() => UpdateProgress(++progressBar.Value, selectedFiles1.Count)));
                         }
                         catch (Exception ex)
                         {
-                            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                            Uri errorUri = new Uri($"file:///{errorIcon}");
-                            new ToastContentBuilder()
-                                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                                .AddText($"Error encrypting {Path.GetFileName(file)}: {ex.Message}")
-                                .Show();
+                            ShowNotification($"Error encrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
                         }
                     });
                 });
-                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                Uri successUri = new Uri($"file:///{successIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("All Files Have Been Successfully Encrypted")
-                    .Show();
+
+                ShowNotification("All Files Have Been Successfully Encrypted", "success.png");
             }
             catch (Exception ex)
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText($"Error during encryption: {ex.Message}")
-                    .Show();
+                ShowNotification($"Error during encryption: {ex.Message}", "error.png");
             }
             finally
             {
@@ -875,74 +811,82 @@ namespace CipherShield
             }
         }
 
+
+        private void ShowNotification(string message, string iconFileName)
+        {
+            string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", iconFileName);
+            Uri iconUri = new Uri($"file:///{iconPath}");
+            new ToastContentBuilder()
+                .AddAppLogoOverride(iconUri, ToastGenericAppLogoCrop.Default)
+                .AddText(message)
+                .Show();
+        }
+
+
         // method to decrypt the selected files
         private async void DecryptButton_Click_1(object sender, EventArgs e)
         {
             if (selectedFiles1.Count == 0)
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please Select The Files First")
-                    .Show();
+                ShowNotification("Please Select The Files First", "error.png");
                 return;
             }
 
             if (string.IsNullOrEmpty(FilesEncryptionEnterPwdTxtBox.Text))
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("Please Enter a Password")
-                    .Show();
+                ShowNotification("Please Enter a Password", "error.png");
                 return;
             }
 
             DisableControls();
             UpdateProgress(0, selectedFiles1.Count);
+            bool hasErrors = false;
 
             try
             {
                 progressBar.Visible = true;
+                string password = FilesEncryptionEnterPwdTxtBox.Text;
+                if (password != PasswordStorage.GetPassword())
+                {
+                    ShowNotification("Incorrect password", "error.png");
+                    EnableControls();
+                    return;
+                }
+
                 await Task.Run(async () =>
                 {
                     await Parallel.ForEachAsync(selectedFiles1, async (file, cancellationToken) =>
                     {
                         try
                         {
-                            await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
+                            if (!file.EndsWith(".CIPHER-SHIELDED"))
+                            {
+                                ShowNotification($"Error decrypting {Path.GetFileName(file)}: File is not encrypted", "error.png");
+                                hasErrors = true;
+                                return;
+                            }
 
+                            await ProcessFileInPlace(file, FilesEncryptionEnterPwdTxtBox.Text, false);
+                            string decryptedFile = file.Substring(0, file.Length - ".CIPHER-SHIELDED".Length);
+                            File.Move(file, decryptedFile); // Rename the file back to original
                             progressBar.Invoke(new Action(() => UpdateProgress(++progressBar.Value, selectedFiles1.Count)));
                         }
                         catch (Exception ex)
                         {
-                            string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                            Uri errorUri = new Uri($"file:///{errorIcon}");
-                            new ToastContentBuilder()
-                                .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                                .AddText($"Error decrypting {Path.GetFileName(file)}: {ex.Message}")
-                                .Show();
+                            ShowNotification($"Error decrypting {Path.GetFileName(file)}: {ex.Message}", "error.png");
+                            hasErrors = true;
                         }
                     });
                 });
 
-                string successIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "success.png");
-                Uri successUri = new Uri($"file:///{successIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(successUri, ToastGenericAppLogoCrop.Default)
-                    .AddText("All Files Have Been Successfully Decrypted")
-                    .Show();
+                if (!hasErrors)
+                {
+                    ShowNotification("All Files Have Been Successfully Decrypted", "success.png");
+                }
             }
             catch (Exception ex)
             {
-                string errorIcon = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Icons", "error.png");
-                Uri errorUri = new Uri($"file:///{errorIcon}");
-                new ToastContentBuilder()
-                    .AddAppLogoOverride(errorUri, ToastGenericAppLogoCrop.Default)
-                    .AddText($"Error during decryption: {ex.Message}")
-                    .Show();
+                ShowNotification($"Error during decryption: {ex.Message}", "error.png");
             }
             finally
             {
@@ -1056,6 +1000,8 @@ namespace CipherShield
                 }
             }
         }
+
+       
 
         // clear inputs
         private void clear_Click(object sender, EventArgs e)
